@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Wikitea</string>
+    <string name="edit_username">username</string>
+    <string name="edit_password">password</string>
+    <string name="button_send">Login</string>
+    <string name="text_welcome">Welcome</string>
 </resources>
