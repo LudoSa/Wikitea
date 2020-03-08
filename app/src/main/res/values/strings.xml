@@ -7,4 +7,5 @@
     <string name="title">Select type of tea:</string>
     <string name="action_search"></string>
     <string name="action_settings">settings</string>
+    <string name="description_BlackTea">Description</string>
 </resources>
