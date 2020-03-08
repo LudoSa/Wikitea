@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toolbar;
 
@@ -35,6 +37,18 @@ public class HomeActivity extends AppCompatActivity implements TeaListView.TeaLi
         list = (ListView) findViewById(R.id.listview);
         TeaListView tealistview=new TeaListView(this, teaname, teadescription,imgid);
         list.setAdapter(tealistview);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 1) {
+                    Intent tealist = new Intent(view.getContext(), TeaTypeActivity.class);
+                    startActivity(tealist);
+                }
+            }
+        });
+
 
     }
 
