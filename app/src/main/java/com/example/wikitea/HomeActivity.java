@@ -2,10 +2,12 @@ package com.example.wikitea;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
-public class HomeActivity extends AppCompatActivity {
+//Class for tea's categories
+public class HomeActivity extends AppCompatActivity implements TeaListView.TeaListener {
 
 
     ListView list;
@@ -21,6 +23,12 @@ public class HomeActivity extends AppCompatActivity {
         list = (ListView) findViewById(R.id.listview);
         TeaListView tealistview=new TeaListView(this, teaname, teadescription,imgid);
         list.setAdapter(tealistview);
-        //list.setOnClickListener();
+
+    }
+
+    @Override
+    public void teaClick(int position) {
+
+
     }
 }

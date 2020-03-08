@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.example.wikitea.R;
 
+//Class for manage the listview of the homeActivity
 public class TeaListView extends ArrayAdapter<String> {
 
     private String[] teaname;
@@ -68,5 +69,9 @@ public class TeaListView extends ArrayAdapter<String> {
             desc=v.findViewById(R.id.teadescription);
             img=v.findViewById(R.id.imageView);
         }
+    }
+
+    public interface TeaListener{
+
     }
 }
