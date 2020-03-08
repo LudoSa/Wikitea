@@ -8,8 +8,8 @@
 
     <ListView
         android:id="@+id/tealist"
-        android:layout_width="333dp"
-        android:layout_height="616dp"
+        android:layout_width="421dp"
+        android:layout_height="739dp"
         android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
