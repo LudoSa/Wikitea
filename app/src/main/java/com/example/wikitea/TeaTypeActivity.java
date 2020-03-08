@@ -2,7 +2,10 @@ package com.example.wikitea;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,7 +25,16 @@ public class TeaTypeActivity extends AppCompatActivity {
 
         list.setAdapter(arrayAdapter);
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                if(position >= 0) {
+                    Intent tealist = new Intent(view.getContext(), TeaDetailActivity.class);
+                    startActivity(tealist);
+                }
+            }
+        });
 
 
     }

@@ -43,8 +43,8 @@ public class HomeActivity extends AppCompatActivity implements TeaListView.TeaLi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 1) {
-                    Intent tealist = new Intent(view.getContext(), TeaTypeActivity.class);
-                    startActivity(tealist);
+                    Intent teaCatlist = new Intent(view.getContext(), TeaTypeActivity.class);
+                    startActivity(teaCatlist);
                 }
             }
         });

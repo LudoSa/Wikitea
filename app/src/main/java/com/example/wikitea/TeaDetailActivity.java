@@ -8,7 +8,11 @@ public class TeaDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tea_type);
+        setContentView(R.layout.activity_detail);
+
+
+
+
     }
 
 }
