@@ -25,6 +25,11 @@ public class TeaTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tea_type);
 
+        //Set the toolbar for this activity
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setActionBar(toolbar);
+
+
         //Received the type of tea
         textView=(TextView)findViewById(R.id.teaTypeClicked);
         String TempTea=getIntent().getStringExtra("teaTypeClicked");
@@ -35,10 +40,7 @@ public class TeaTypeActivity extends AppCompatActivity {
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, android.R.id.text1,teaname);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setActionBar(toolbar);
 
-        list = (ListView) findViewById(R.id.tealist);
 
         listView.setAdapter(arrayAdapter);
 
@@ -55,9 +57,6 @@ public class TeaTypeActivity extends AppCompatActivity {
                 intent.putExtra("teaClicked", TempString);
                 startActivity(intent);
 
-
-                    Intent tealist = new Intent(view.getContext(), TeaDetailActivity.class);
-                    startActivity(tealist);
 
             }
         });
