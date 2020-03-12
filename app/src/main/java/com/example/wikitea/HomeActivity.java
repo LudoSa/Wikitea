@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,8 +30,8 @@ public class HomeActivity extends AppCompatActivity implements TeaListView.TeaLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setActionBar(toolbar);
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
 
@@ -42,16 +44,24 @@ public class HomeActivity extends AppCompatActivity implements TeaListView.TeaLi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 1) {
+
                     Intent teaCatlist = new Intent(view.getContext(), TeaTypeActivity.class);
                     startActivity(teaCatlist);
-                }
+
+
             }
         });
 
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
