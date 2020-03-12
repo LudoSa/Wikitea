@@ -2,7 +2,6 @@ package com.example.wikitea;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,10 +16,9 @@ import android.widget.Toolbar;
 //Class for tea's categories
 public class HomeActivity extends AppCompatActivity implements TeaListView.TeaListener {
 
-
-    ListView list;
-    String[] teaname = {"Green tea", "Black tea", "White tea", "Oolong tea", "Pu Er"};
-    String[] teadescription = {"It's green", "It's black", "It's white", "It's not a color", "I don't now what is this"};
+    ListView listView;
+    String[] typeTea = {"Green tea", "Black tea", "White tea", "Oolong tea", "Pu Er"};
+    String[] teadescription = {"It's green", "It's black", "It's white", "It's not a color", "I don't know what is this"};
     Integer[] imgid={R.drawable.green, R.drawable.black, R.drawable.white, R.drawable.olong, R.drawable.puer};
 
 
@@ -34,24 +32,25 @@ public class HomeActivity extends AppCompatActivity implements TeaListView.TeaLi
         setSupportActionBar(toolbar);
 
 
+        listView = (ListView) findViewById(R.id.listview);
 
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, android.R.id.text1, typeTea);
 
-        list = (ListView) findViewById(R.id.listview);
-        TeaListView tealistview=new TeaListView(this, teaname, teadescription,imgid);
-        list.setAdapter(tealistview);
+        listView.setAdapter(arrayAdapter);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                String TempString = typeTea[position].toString();
 
-                    Intent teaCatlist = new Intent(view.getContext(), TeaTypeActivity.class);
-                    startActivity(teaCatlist);
+                Intent intent = new Intent(HomeActivity.this, TeaTypeActivity.class);
 
+                intent.putExtra("teaTypeClicked", TempString);
+                startActivity(intent);
 
             }
         });
-
 
     }
 
