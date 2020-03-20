@@ -2,6 +2,10 @@ package com.example.wikitea;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,24 +69,27 @@ public class HomeActivity extends AppCompatActivity implements TeaListView.TeaLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
+
+
         switch (item.getItemId()) {
             case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                Intent intent = new Intent(this, settings.class);
-                startActivity(intent);
 
+                getFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, new SettingsFrag())
+                        .commit();
 
             case R.id.action_search:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
+
                 return super.onOptionsItemSelected(item);
 
         }
+
     }
 
 }

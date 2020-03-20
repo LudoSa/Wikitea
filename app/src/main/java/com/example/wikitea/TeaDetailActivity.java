@@ -36,15 +36,16 @@ public class TeaDetailActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.details_menu, menu);
         return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                Intent intent = new Intent(this, settings.class);
-                startActivity(intent);
+                getFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, new SettingsFrag())
+                        .commit();
 
 
             case R.id.action_search:

@@ -10,15 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <activity android:name=".settings"
-            android:parentActivityName=".HomeActivity">
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity"/>
-
-
-        </activity>
-
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@menu/main_menu" />
