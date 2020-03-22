@@ -10,4 +10,5 @@
     <string name="action_favorite">favorite</string>
     <string name="action_add">add</string>
     <string name="description_BlackTea">Description</string>
+    <string name="hello_blank_fragment">Hello my fragment</string>
 </resources>

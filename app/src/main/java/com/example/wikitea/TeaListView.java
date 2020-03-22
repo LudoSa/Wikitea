@@ -2,76 +2,54 @@ package com.example.wikitea;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.wikitea.R;
+import com.example.wikitea.Tables.Tea;
+import com.example.wikitea.Tables.TeaViewModel;
+
+import java.util.List;
 
 //Class to manage the listview of the homeActivity
-public class TeaListView extends ArrayAdapter<String> {
+public class TeaListView extends AppCompatActivity {
 
-    private String[] teaname;
-    private String[] teadesc;
-    private Integer[] imgid;
-    private Activity context;
-
-    public TeaListView(Activity context, String[] teaname, String[] teadesc, Integer[] imgid ){
-        super(context, R.layout.listview_layout, teaname);
-
-        this.context=context;
-        this.teaname=teaname;
-        this.teadesc=teadesc;
-        this.imgid=imgid;
-
-    }
+    //Declare the viewModel we'll use
+    private TeaViewModel teaViewModel;
 
 
-    @NonNull
+
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.listview_layout);
 
-        View r = convertView;
-            ViewHolder viewHolder=null;
-            if(r==null)
-            {
+        teaViewModel = ViewModelProviders.of(this).get(TeaViewModel.class);
+        teaViewModel.getAllTeas().observe(this, new Observer<List<Tea>>() {
+            @Override
+            public void onChanged(@Nullable List<Tea> teas) {
 
-                LayoutInflater layoutInflater=context.getLayoutInflater();
-                r=layoutInflater.inflate(R.layout.listview_layout,null,true);
-                viewHolder=new ViewHolder(r);
-                r.setTag(viewHolder);
+                //update RecyclerView
+                Toast.makeText(TeaListView.this,"onChanged",Toast.LENGTH_SHORT).show();
             }
-            else
-            {
-                viewHolder=(ViewHolder) r.getTag();
-            }
+        });
 
-            viewHolder.img.setImageResource(imgid[position]);
-            viewHolder.name.setText(teaname[position]);
-            viewHolder.desc.setText(teadesc[position]);
-        return r;
-    }
-
-    class ViewHolder
-    {
-        TextView name;
-        TextView desc;
-        ImageView img;
-        ViewHolder(View v)
-        {
-            name=v.findViewById(R.id.teaname);
-            desc=v.findViewById(R.id.teadescription);
-            img=v.findViewById(R.id.imageView);
-        }
-    }
-
-    public interface TeaListener{
 
     }
+
+
+
 }
