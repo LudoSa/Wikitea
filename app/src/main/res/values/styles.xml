@@ -8,7 +8,7 @@
     </style>
         <!-- Customize your theme here. -->
     <style name="ToolbarStyle" parent="Theme.AppCompat.Light">
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/toolbar</item>
     </style>
 
 </resources>
