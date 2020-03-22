@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:id="@+id/detailLayout"
     tools:context=".MainActivity">
 
 
@@ -38,7 +39,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageButton
-        android:id="@+id/search_button"
+        android:id="@+id/mapButton"
         android:layout_width="132dp"
         android:layout_height="81dp"
         android:layout_marginTop="15dp"
@@ -72,7 +73,6 @@
         android:backgroundTint="@color/background"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/search_button"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText4"
@@ -81,5 +81,6 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/app_toolbar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

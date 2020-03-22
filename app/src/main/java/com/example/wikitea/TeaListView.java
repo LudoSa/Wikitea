@@ -42,13 +42,10 @@ public class TeaListView extends ArrayAdapter<String> {
             if(r==null)
             {
 
-
                 LayoutInflater layoutInflater=context.getLayoutInflater();
                 r=layoutInflater.inflate(R.layout.listview_layout,null,true);
                 viewHolder=new ViewHolder(r);
                 r.setTag(viewHolder);
-
-
             }
             else
             {
