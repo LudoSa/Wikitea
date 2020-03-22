@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements TeaListView.TeaLi
             case R.id.action_settings:
 
                 getFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, new SettingsFrag())
+                        .replace(android.R.id.content, new SettingsFrag()).addToBackStack(null)
                         .commit();
 
             case R.id.action_search:

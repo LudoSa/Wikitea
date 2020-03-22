@@ -5,6 +5,5 @@
     <color name="colorButton">#008A3C</color>
     <color name="background">#D3DFB8</color>
     <color name="toolbar">#DCF763</color>
-    <color name="button1">#574D68</color>
-    <color name="button2">#AC3931</color>
+    <color name="mainText">#2D313D</color>
 </resources>

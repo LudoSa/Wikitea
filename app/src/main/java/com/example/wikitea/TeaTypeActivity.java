@@ -82,7 +82,7 @@ public class TeaTypeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 getFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, new SettingsFrag())
+                        .replace(android.R.id.content, new SettingsFrag()).addToBackStack(null)
                         .commit();
 
             case R.id.action_search:

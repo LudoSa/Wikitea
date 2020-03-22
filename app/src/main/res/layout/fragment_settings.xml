@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsFrag">
+    android:background="@color/background"
+    tools:context=".SettingsFrag"
+    android:padding="24dp">
 
 
-</RelativeLayout>
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_theme"
+        android:textOff="@string/settings_theme_dark"
+        android:textOn="@string/settings_theme_light" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_about" />
+</LinearLayout>
