@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddCategoryActivity extends AppCompatActivity {
+public class AddEditCategoryActivity extends AppCompatActivity {
 
     public static final String EXTRA_IDCATEGORY = "com.example.wikitea.EXTRA_IDCATEGORY";
     public static final String EXTRA_NAME = "com.example.wikitea.EXTRA_NAME";
@@ -34,8 +34,17 @@ public class AddCategoryActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Get the intent with all data
+        Intent intent = getIntent();
 
-        setTitle("Add Category");
+        if (intent.hasExtra(EXTRA_IDCATEGORY)){
+            setTitle("Edit Category");
+            editTextName.setText(intent.getStringExtra(EXTRA_NAME));
+            editTextVirtues.setText(intent.getStringExtra(EXTRA_VIRTUES));
+        }else{
+            setTitle("Add Category");
+        }
+
 
 
     }

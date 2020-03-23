@@ -8,6 +8,7 @@
     <string name="action_search"></string>
     <string name="action_settings">settings</string>
     <string name="action_favorite">favorite</string>
+    <string name="action_delete_all_categories">delete all categories</string>
     <string name="action_add">add</string>
     <string name="description_BlackTea">Description</string>
     <string name="settings_theme">Theme</string>

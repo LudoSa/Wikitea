@@ -2,7 +2,9 @@ package com.example.wikitea.Tables.Category;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
     private List<Category> categories = new ArrayList<>();
-
+    private OnItemLongClickListener listener;
 
     @NonNull
     @Override
@@ -40,13 +42,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
 
-    public void setCategories(List<Category> categories){
+    public void setCategories(List<Category> categories) {
 
         this.categories = categories;
         notifyDataSetChanged();
     }
 
-    class CategoryHolder extends RecyclerView.ViewHolder{
+    public Category getCategoryAt(int position) {
+
+        return categories.get(position);
+    }
+
+
+    class CategoryHolder extends RecyclerView.ViewHolder {
 
         private TextView textViewName;
         private TextView textViewVirtues;
@@ -59,7 +67,29 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             textViewVirtues = itemView.findViewById(R.id.text_view_virtues);
             textViewId = itemView.findViewById(R.id.text_view_id);
 
+            //Modify category
+            itemView.setOnLongClickListener(new OnLongClickListener() {
+
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener != null && position != RecyclerView.NO_POSITION){
+                        listener.onItemLongClick(categories.get(position));
+                    }
+                    return false;
+                }
+            });
+
         }
+    }
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Category category);
+    }
+
+    public void setOnItemClickListener(OnItemLongClickListener listener) {
+        this.listener = listener;
+
     }
 
 }
