@@ -1,4 +1,4 @@
-package com.example.wikitea.Tables;
+package com.example.wikitea.Tables.Tea;
 
 import android.view.LayoutInflater;
 import android.view.View;

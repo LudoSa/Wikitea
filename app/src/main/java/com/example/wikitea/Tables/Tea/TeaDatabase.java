@@ -1,4 +1,4 @@
-package com.example.wikitea.Tables;
+package com.example.wikitea.Tables.Tea;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -13,7 +13,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 public abstract class TeaDatabase extends RoomDatabase {
 
     private static TeaDatabase instance;
-
     public abstract TeaDao teaDao();
 
     //Only one thread at a time can be executed

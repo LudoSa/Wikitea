@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -25,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 //Class for tea's categories
-public class CategoryActivity extends AppCompatActivity implements TeaListView.TeaListener {
+public class CategoryActivity extends AppCompatActivity {
 
     public static final int ADD_CATEGORY_REQUEST = 1;
 
@@ -34,7 +35,8 @@ public class CategoryActivity extends AppCompatActivity implements TeaListView.T
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
@@ -78,8 +80,12 @@ public class CategoryActivity extends AppCompatActivity implements TeaListView.T
         setSupportActionBar(toolbar);
 
 
-    }
 
+
+
+
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -134,5 +140,11 @@ public class CategoryActivity extends AppCompatActivity implements TeaListView.T
         }
 
     }
+
+
+
+
+
+
 
 }
