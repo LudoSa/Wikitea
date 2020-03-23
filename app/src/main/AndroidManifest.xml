@@ -48,10 +48,6 @@
 
         </activity>
 
-        <activity android:name=".TeaActivity">
-
-        </activity>
-
     </application>
 
 </manifest>
