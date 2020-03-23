@@ -71,12 +71,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             itemView.setOnLongClickListener(new OnLongClickListener() {
 
                 @Override
-                public boolean onLongClick(View v) {
-                    int position = getAdapterPosition();
-                    if(listener != null && position != RecyclerView.NO_POSITION){
-                        listener.onItemLongClick(categories.get(position));
-                    }
-                    return false;
+                    public boolean onLongClick(View v) {
+                        int position = getAdapterPosition();
+                        if(listener != null && position != RecyclerView.NO_POSITION){
+                            listener.onItemLongClick(categories.get(position));
+                        }
+                        return false;
                 }
             });
 
