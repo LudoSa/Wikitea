@@ -9,11 +9,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Tea.class}, version = 1)
+@Database(entities = {Tea.class}, version = 1, exportSchema = false)
 public abstract class TeaDatabase extends RoomDatabase {
 
     private static TeaDatabase instance;
-
     public abstract TeaDao teaDao();
 
     //Only one thread at a time can be executed

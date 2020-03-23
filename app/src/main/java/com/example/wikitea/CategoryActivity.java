@@ -100,7 +100,7 @@ public class CategoryActivity extends AppCompatActivity {
         }).attachToRecyclerView(recyclerView);
 
         //Set long click action on an item in the recyclerview
-        adapter.setOnItemClickListener(new CategoryAdapter.OnItemLongClickListener() {
+        adapter.setOnItemLongClickListener(new CategoryAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(Category category) {
                 Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
@@ -108,6 +108,16 @@ public class CategoryActivity extends AppCompatActivity {
                 intent.putExtra(AddEditCategoryActivity.EXTRA_NAME, category.getName());
                 intent.putExtra(AddEditCategoryActivity.EXTRA_VIRTUES, category.getVirtues());
                 startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
+            }
+        });
+
+
+
+        adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Category category) {
+                Intent intent = new Intent(CategoryActivity.this, TeaActivity.class);
+                startActivity(intent);
             }
         });
 

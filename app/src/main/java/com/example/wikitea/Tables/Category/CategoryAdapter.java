@@ -4,20 +4,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikitea.R;
+import com.example.wikitea.Tables.Tea.Tea;
+import com.example.wikitea.Tables.Tea.TeaAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
     private List<Category> categories = new ArrayList<>();
-    private OnItemLongClickListener listener;
+    private OnItemLongClickListener longClickListener;
+    private OnItemClickListener clickListener;
 
     @NonNull
     @Override
@@ -67,7 +69,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             textViewVirtues = itemView.findViewById(R.id.text_view_virtues);
             textViewId = itemView.findViewById(R.id.text_view_id);
 
-            //Modify category
+            //Modify category by loooong clicking
             itemView.setOnLongClickListener(new OnLongClickListener() {
 
                 @Override
@@ -80,16 +82,40 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 }
             });
 
+            //Simple click to open new View
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(clickListener != null && position != RecyclerView.NO_POSITION) {
+                        clickListener.onItemClick(categories.get(position));
+                    }
+                }
+            });
+
+
+
         }
     }
 
+
+
+    //Long click
     public interface OnItemLongClickListener {
         void onItemLongClick(Category category);
     }
-
-    public void setOnItemClickListener(OnItemLongClickListener listener) {
-        this.listener = listener;
-
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.longClickListener = listener;
     }
+
+
+    //Simple click on an item
+    public interface OnItemClickListener{
+        void onItemClick(Category category);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.clickListener = listener;
+    }
+
 
 }
