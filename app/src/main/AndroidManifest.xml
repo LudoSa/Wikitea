@@ -10,57 +10,48 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".settings"
-            android:parentActivityName=".HomeActivity">
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity"/>
 
 
+        <activity android:name=".AddCategoryActivity">
         </activity>
+
 
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@menu/main_menu" />
+            android:resource="@menu/category_menu" />
 
-
-        <activity android:name=".TeaDetailActivity"
-
-            android:parentActivityName=".TeaTypeActivity">
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TeaTypeActivity"/>
-
-
+        <activity
+            android:name=".TeaDetailActivity"
+            android:parentActivityName=".TeaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TeaActivity" />
         </activity>
 
-        <activity android:name=".TeaTypeActivity"
-            android:parentActivityName=".HomeActivity">
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity"/>
-
+        <activity
+            android:name=".TeaActivity"
+            android:parentActivityName=".CategoryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CategoryActivity" />
         </activity>
 
-
-
-
-        <activity android:name=".HomeActivity">
-
+        <activity android:name=".CategoryActivity">
             <meta-data
                 android:name="com.google.android.actions"
-                android:resource="@menu/main_menu" />
-
-        </activity>
-
-
-        <activity android:name=".MainActivity">
+                android:resource="@menu/category_menu" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity android:name=".MainActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

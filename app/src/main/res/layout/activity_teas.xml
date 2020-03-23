@@ -5,25 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".HomeActivity">
-
+    tools:context=".TeaActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/tea_item"
-        />
+        android:layout_width="413dp"
+        android:layout_height="673dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-2dp"
+        tools:layout_editor_absoluteY="58dp"
+        tools:listitem="@layout/tea_item" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_tea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
         android:foregroundGravity="bottom"
-        android:layout_margin="32dp"/>
+        android:src="@drawable/ic_add"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="177dp"
+        tools:layout_editor_absoluteY="646dp" />
 
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

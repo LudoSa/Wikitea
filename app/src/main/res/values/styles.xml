@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorButton</item>
         <item name="background">@color/background</item>
-        <item name="mainText">@color/mainText</item>
+        <item name="textAppearanceBody1">@color/mainText</item>
     </style>
 
 

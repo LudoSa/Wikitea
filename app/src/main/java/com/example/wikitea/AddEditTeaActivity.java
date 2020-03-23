@@ -30,12 +30,15 @@ public class AddEditTeaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tea);
 
+        //Set action bar
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.text_view_description);
         //numberPickerId = findViewById(R.id.n)
 
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         //contains id, title, price
         Intent intent = getIntent();

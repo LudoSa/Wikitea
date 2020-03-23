@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (username.equals("test") && (password.equals("test"))){
 
-            Intent intent = new Intent(v.getContext(), HomeActivity.class);
+            Intent intent = new Intent(v.getContext(), CategoryActivity.class);
             startActivity(intent);
 
 

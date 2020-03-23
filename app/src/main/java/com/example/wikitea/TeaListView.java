@@ -65,8 +65,8 @@ public class TeaListView extends ArrayAdapter<String> {
         ImageView img;
         ViewHolder(View v)
         {
-            name=v.findViewById(R.id.teaname);
-            desc=v.findViewById(R.id.teadescription);
+            name=v.findViewById(R.id.text_view_title);
+            desc=v.findViewById(R.id.text_view_description);
             img=v.findViewById(R.id.imageView);
         }
     }
