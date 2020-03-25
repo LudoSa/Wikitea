@@ -53,8 +53,11 @@ public abstract class TeaDatabase extends RoomDatabase {
        protected Void doInBackground(Void... voids) {
           teaDao.insert(new Tea("First Tea !","Good tea",69));
            teaDao.insert(new Tea("Second Tea !","Excellent tea",70));
-           teaDao.insert(new Tea("Third Tea !","Bad tea",666));
-
+           teaDao.insert(new Tea("Third Tea !","Bad tea",45));
+           teaDao.insert(new Tea("Fourth Tea !","Disgusting tea",23));
+           teaDao.insert(new Tea("Fifth Tea !","Very good tea",45));
+           teaDao.insert(new Tea("Sixth Tea !","Good tea",79));
+           teaDao.insert(new Tea("Seventh Tea !","Good tea",34));
            return null;
        }
    }

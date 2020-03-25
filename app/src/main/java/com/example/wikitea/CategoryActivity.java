@@ -31,6 +31,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     public static final int ADD_CATEGORY_REQUEST = 1;
     public static final int EDIT_CATEGORY_REQUEST = 2;
+    public static final int LIST_TEA_REQUEST = 3;
 
     private CategoryViewModel categoryViewModel;
 
@@ -112,12 +113,19 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
 
-
+        //Simple click, we take the id to get the list of teas
         adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Category category) {
+            public void onItemClick(Category category)
+            {
                 Intent intent = new Intent(CategoryActivity.this, TeaActivity.class);
-                startActivity(intent);
+                //intent.putExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, category.getId());
+                //startActivityForResult(intent,LIST_TEA_REQUEST);
+
+
+                //******************************************************************************
+
+                startActivityForResult(intent, LIST_TEA_REQUEST);
             }
         });
 
