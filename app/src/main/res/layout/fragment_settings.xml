@@ -11,7 +11,7 @@
 
     <Switch
         android:id="@+id/switch1"
-        android:layout_width="354dp"
+        android:layout_width="363dp"
         android:layout_height="wrap_content"
         android:text="@string/settings_theme"
         android:textOff="@string/settings_theme_dark"
