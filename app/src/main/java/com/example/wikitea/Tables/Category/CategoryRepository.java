@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.wikitea.Tables.Tea.TeaRepository;
+
 import java.util.List;
 
 public class CategoryRepository {
@@ -12,12 +14,15 @@ public class CategoryRepository {
     private CategoryDao categoryDao;
     private LiveData<List<Category>> allCategories;
 
+
+
     public CategoryRepository(Application application){
 
         CategoryDatabase database = CategoryDatabase.getInstance(application);
         categoryDao = database.categoryDao();
         allCategories = categoryDao.getAllCategories();
     }
+
 
     public void insert(Category category){
 

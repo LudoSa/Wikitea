@@ -1,6 +1,7 @@
 package com.example.wikitea.Tables.Category;
 
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,8 +9,8 @@ import androidx.room.PrimaryKey;
 public class Category {
 
     @PrimaryKey(autoGenerate = true)
-
-    private int id;
+    @ColumnInfo(name = "idCategory")
+    private int idCategory;
 
     private String name;
 
@@ -22,12 +23,12 @@ public class Category {
 
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
     }
 
-    public int getId(){
-        return id;
+    public int getIdCategory(){
+        return idCategory;
     }
 
     public String getName(){

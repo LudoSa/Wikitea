@@ -12,8 +12,12 @@
 
 
         <activity android:name=".AddEditCategoryActivity">
+
         </activity>
 
+        <activity android:name=".AddEditTeaActivity">
+
+        </activity>
 
         <meta-data
             android:name="com.google.android.actions"
@@ -33,6 +37,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CategoryActivity" />
+
         </activity>
 
         <activity android:name=".CategoryActivity">

@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikitea.R;
-import com.example.wikitea.Tables.Tea.Tea;
-import com.example.wikitea.Tables.Tea.TeaAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category currentCategory = categories.get(position);
         holder.textViewName.setText(currentCategory.getName());
         holder.textViewVirtues.setText(currentCategory.getVirtues());
-        holder.textViewId.setText(String.valueOf(currentCategory.getId()));
+        holder.textViewId.setText(String.valueOf(currentCategory.getIdCategory()));
     }
 
     @Override

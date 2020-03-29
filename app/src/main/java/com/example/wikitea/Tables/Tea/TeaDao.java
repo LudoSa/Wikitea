@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
 import java.util.List;
 
 @Dao
@@ -21,11 +22,10 @@ public interface TeaDao
     void delete(Tea tea);
     //IL SERA POSSIBLE DE SUPPRIMER DES LISTES ;) = DELETE ALL TEA FROM CATEGORY
 
-
     @Query("DELETE FROM tea_table")
     void deleteAllTeas();
 
-    @Query("SELECT * FROM tea_table ORDER BY id DESC")
+    @Query("SELECT * FROM tea_table ORDER BY idTea DESC")
     LiveData<List<Tea>> getAllTeas();
 
 

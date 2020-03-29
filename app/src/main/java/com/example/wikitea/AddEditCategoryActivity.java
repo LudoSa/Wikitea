@@ -37,6 +37,8 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         //Get the intent with all data
         Intent intent = getIntent();
 
+
+
         if (intent.hasExtra(EXTRA_IDCATEGORY)){
             setTitle("Edit Category");
             editTextName.setText(intent.getStringExtra(EXTRA_NAME));

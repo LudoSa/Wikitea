@@ -1,5 +1,6 @@
 package com.example.wikitea;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.AsyncQueryHandler;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,11 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.wikitea.Tables.Category.Category;
 import com.example.wikitea.Tables.Tea.Tea;
 import com.example.wikitea.Tables.Tea.TeaAdapter;
+import com.example.wikitea.Tables.Tea.TeaRepository;
 import com.example.wikitea.Tables.Tea.TeaViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeaActivity extends AppCompatActivity {
@@ -29,13 +35,23 @@ public class TeaActivity extends AppCompatActivity {
 
     private TeaViewModel teaViewModel;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tea);
 
-        FloatingActionButton buttonAddTea = findViewById(R.id.button_add_tea);
+
+
+        //toolbar
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //Bottom navbar
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        FloatingActionButton buttonAddTea = (FloatingActionButton) findViewById(R.id.button_add_tea);
+
         buttonAddTea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +75,7 @@ public class TeaActivity extends AppCompatActivity {
             }
         });
 
+        //Swipe for delete a tea
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -73,11 +90,13 @@ public class TeaActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
+
+        //For edit tea details
         adapter.setOnItemClickListener(new TeaAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Tea tea) {
                 Intent intent = new Intent(TeaActivity.this, AddEditTeaActivity.class);
-                intent.putExtra(AddEditTeaActivity.EXTRA_ID, tea.getId());
+                intent.putExtra(AddEditTeaActivity.EXTRA_ID, tea.getIdTea());
                 intent.putExtra(AddEditTeaActivity.EXTRA_TITLE, tea.getTitle());
                 intent.putExtra(AddEditTeaActivity.EXTRA_DESCRIPTION, tea.getDescription());
                 intent.putExtra(AddEditTeaActivity.EXTRA_PRICE, tea.getPrice());
@@ -92,17 +111,25 @@ public class TeaActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //Get the categoryId
+        Intent categoryIntent = getIntent();
+        int categoryId = categoryIntent.getIntExtra("EXTRA_CATEGORY_ID", 0);
+
+
+        //Save a new tea
         if (requestCode == ADD_TEA_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             int price = data.getIntExtra(AddEditTeaActivity.EXTRA_PRICE, 1);
 
+
             Tea tea = new Tea(title, description, price);
             teaViewModel.insert(tea);
-
             Toast.makeText(this, "Tea saved", Toast.LENGTH_SHORT).show();
-        } else if (requestCode == EDIT_TEA_REQUEST && resultCode == RESULT_OK) {
+
+        } else if (requestCode == EDIT_TEA_REQUEST && resultCode == RESULT_OK) { // EDIT A TEA
             int id = data.getIntExtra(AddEditTeaActivity.EXTRA_ID, -1);
+
 
             if (id == -1) {
                 Toast.makeText(this, "Tea can't be updated", Toast.LENGTH_SHORT).show();
@@ -114,7 +141,7 @@ public class TeaActivity extends AppCompatActivity {
             int price = data.getIntExtra(AddEditTeaActivity.EXTRA_PRICE, 1);
 
             Tea tea = new Tea(title, description, price);
-            tea.setId(id);
+            tea.setIdTea(id);
             teaViewModel.update(tea);
 
             Toast.makeText(this, "Tea updated", Toast.LENGTH_SHORT).show();
@@ -126,24 +153,63 @@ public class TeaActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.category_menu, menu);
+        menuInflater.inflate(R.menu.details_menu, menu);
         return true;
     }
 
 
-    /*
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.delete_all_teas:
-                noteViewModel.deleteAllNotes();
-                Toast.makeText(this, "All notes deleted", Toast.LENGTH_SHORT).show();
+            case R.id.action_settings:
+
+                getFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, new SettingsFrag()).addToBackStack(null)
+                        .commit();
+
+            case R.id.action_search:
+
                 return true;
+
+/*
+            case R.id.action_delete_all_categories:
+                teaViewModel.deleteAllCategories();
+                Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
+                return true;
+*/
+            case R.id.action_category:
+
+                Intent intent = new Intent(TeaActivity.this, CategoryActivity.class);
+                startActivity(intent);
+                return true;
+
             default:
+
                 return super.onOptionsItemSelected(item);
         }
     }
 
-     */
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            switch(item.getItemId()){
+
+                case R.id.action_category:
+                    Intent intent = new Intent(TeaActivity.this, CategoryActivity.class);
+                    startActivity(intent);
+                    return true;
+
+                case R.id.action_tea:
+                    return true;
+            }
+
+            return false;
+
+        }
+    };
+
 }
 

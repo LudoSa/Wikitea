@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import static com.example.wikitea.AddEditCategoryActivity.EXTRA_IDCATEGORY;
+
 public class AddEditTeaActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "com.example.wikitea.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.example.wikitea.EXTRA_TITLE";
@@ -35,20 +37,23 @@ public class AddEditTeaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+
+
+
         editTextTitle = findViewById(R.id.edit_text_title);
-        editTextDescription = findViewById(R.id.text_view_description);
+        editTextDescription = findViewById(R.id.edit_text_description);
         //numberPickerId = findViewById(R.id.n)
 
 
         //contains id, title, price
         Intent intent = getIntent();
 
+        //Add or edit tea title
         if(intent.hasExtra(EXTRA_ID))
         {
             setTitle("Edit Tea");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
-
             //edit.setText(intent.getStringExtra(EXTRA_ID));
 
         }
@@ -94,8 +99,6 @@ public class AddEditTeaActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.add_tea_menu, menu);
-
-        //Show the menu
         return true;
     }
 
