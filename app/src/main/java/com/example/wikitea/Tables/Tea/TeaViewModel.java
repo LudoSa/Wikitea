@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wikitea.Tables.Category.Category;
 
@@ -12,18 +14,16 @@ import java.util.List;
 
 public class TeaViewModel extends AndroidViewModel {
     private TeaRepository repository;
-    private LiveData<List<Tea>> allTeas;
     private LiveData<List<Tea>> allTeasById;
     private Application application;
 
-    public TeaViewModel(@NonNull Application application) {
+    public TeaViewModel(@NonNull Application application, int id) {
         super(application);
         this.application = application;
 
         repository = new TeaRepository(application);
 
-        allTeas = repository.getAllTeas();
-        //allTeasById = repository.getAllTeasById(id);
+        allTeasById = repository.getAllTeasById(id);
     }
 
 
@@ -40,8 +40,32 @@ public class TeaViewModel extends AndroidViewModel {
         repository.delete(tea);
     }
 
-    public LiveData<List<Tea>> getAllTeas(){
-        return allTeas;
+    public LiveData<List<Tea>> getAllTeasByCategory(int id) {
+        return repository.getAllTeasById(id);
+    };
+
+
+
+    //Factory for custom viewmodel constructor
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+
+        @NonNull
+        private final Application application;
+
+        private final int categoryId;
+
+
+        public Factory(@NonNull Application application, int categoryId) {
+            this.application = application;
+            this.categoryId = categoryId;
+        }
+
+        @Override
+        public <T extends ViewModel> T create(Class<T> modelClass) {
+            //noinspection unchecked
+            //return (T) new TeaViewModel(application, categoryId, repository);
+            return (T) new TeaViewModel(application, categoryId);
+        }
     }
 
 }

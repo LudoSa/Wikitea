@@ -22,8 +22,8 @@ public TeaRepository(Application application)
 {
     TeaDatabase database = TeaDatabase.getInstance(application);
     teaDao = database.teaDao();
-    allTeas = teaDao.getAllTeas();
-    //allTeasById = teaDao.getAllTeasByCategory(id);
+    allTeasById = teaDao.getAllTeasByCategory(id);
+
 }
 
 
@@ -50,12 +50,11 @@ public void deleteAllTeas()
 new DeleteAllTeasAsyncTask(teaDao).execute();
 }
 
+    public LiveData<List<Tea>> getAllTeasById(int id) {
 
+        return teaDao.getAllTeasByCategory(id);
+    }
 
-public LiveData<List<Tea>> getAllTeas()
-{
-    return allTeas;
-}
 
 
 private static class InsertTeaAsyncTask extends AsyncTask<Tea, Void, Void>

@@ -9,15 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity android:name=".AddEditCategoryActivity">
-
-        </activity>
-
-        <activity android:name=".AddEditTeaActivity">
-
-        </activity>
+        <activity android:name=".FavoriteActivity"></activity>
+        <activity android:name=".AddEditCategoryActivity" />
+        <activity android:name=".AddEditTeaActivity" />
 
         <meta-data
             android:name="com.google.android.actions"
@@ -30,28 +24,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TeaActivity" />
         </activity>
-
         <activity
             android:name=".TeaActivity"
             android:parentActivityName=".CategoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CategoryActivity" />
-
         </activity>
-
         <activity android:name=".CategoryActivity">
             <meta-data
                 android:name="com.google.android.actions"
                 android:resource="@menu/category_menu" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
     </application>
 
 </manifest>

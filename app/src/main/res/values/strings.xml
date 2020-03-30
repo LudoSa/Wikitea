@@ -11,6 +11,7 @@
     <string name="action_favorite">favorite</string>
     <string name="action_delete_all_categories">delete all categories</string>
     <string name="action_add">add</string>
+    <string name="action_delete_all_favorites">delete all favorites</string>
 
     <string name="description_BlackTea">Description</string>
 
@@ -21,6 +22,4 @@
 
     <string name="hello_blank_fragment">hello</string>
 
-    <string name="botnav_teas">teas</string>
-    <string name="botnav_categories">category</string>
 </resources>
