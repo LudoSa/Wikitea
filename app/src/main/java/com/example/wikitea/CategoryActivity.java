@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wikitea.Tables.Category.Category;
 import com.example.wikitea.Tables.Category.CategoryAdapter;
 import com.example.wikitea.Tables.Category.CategoryViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -31,9 +32,11 @@ public class CategoryActivity extends AppCompatActivity {
 
     public static final int ADD_CATEGORY_REQUEST = 1;
     public static final int EDIT_CATEGORY_REQUEST = 2;
-    public static final int LIST_TEA_REQUEST = 3;
+
 
     private CategoryViewModel categoryViewModel;
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -41,9 +44,16 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+
+
         //toolbar
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Bottom navbar
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
 
         //Button to add a new category
         FloatingActionButton buttonAddCategory = findViewById(R.id.button_add_category);
@@ -79,9 +89,6 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         //Swipe delete item
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
 
@@ -105,7 +112,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(Category category) {
                 Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
-                intent.putExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, category.getId());
+                intent.putExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, category.getIdCategory());
                 intent.putExtra(AddEditCategoryActivity.EXTRA_NAME, category.getName());
                 intent.putExtra(AddEditCategoryActivity.EXTRA_VIRTUES, category.getVirtues());
                 startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
@@ -119,13 +126,8 @@ public class CategoryActivity extends AppCompatActivity {
             public void onItemClick(Category category)
             {
                 Intent intent = new Intent(CategoryActivity.this, TeaActivity.class);
-                //intent.putExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, category.getId());
-                //startActivityForResult(intent,LIST_TEA_REQUEST);
+                startActivity(intent);
 
-
-                //******************************************************************************
-
-                startActivityForResult(intent, LIST_TEA_REQUEST);
             }
         });
 
@@ -160,12 +162,12 @@ public class CategoryActivity extends AppCompatActivity {
             String virtue = data.getStringExtra(AddEditCategoryActivity.EXTRA_VIRTUES);
 
             Category category = new Category(name, virtue);
-            category.setId(id);
+            category.setIdCategory(id);
             categoryViewModel.update(category);
 
             Toast.makeText(this, "Category updated", Toast.LENGTH_LONG).show();
-        }else{
 
+        }else {
             Toast.makeText(this, "category not saved", Toast.LENGTH_LONG).show();
 
         }
@@ -201,7 +203,6 @@ public class CategoryActivity extends AppCompatActivity {
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
                 return true;
 
-
             default:
 
                 return super.onOptionsItemSelected(item);
@@ -209,5 +210,26 @@ public class CategoryActivity extends AppCompatActivity {
         }
 
     }
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            switch(item.getItemId()){
+
+                case R.id.action_category:
+                    return true;
+
+                case R.id.action_tea:
+                    Intent intent = new Intent(CategoryActivity.this, TeaActivity.class);
+                    startActivity(intent);
+                    return true;
+            }
+
+            return false;
+
+        }
+    };
 
 }

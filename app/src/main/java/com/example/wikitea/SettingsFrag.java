@@ -28,6 +28,8 @@ public class SettingsFrag extends PreferenceFragment {
         SettingsFrag fragment = new SettingsFrag();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+
+
         return fragment;
     }
 

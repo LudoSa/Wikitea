@@ -2,22 +2,19 @@ package com.example.wikitea.Tables.Tea;
 
 import android.icu.util.ULocale;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import static androidx.room.ForeignKey.CASCADE;
+import com.example.wikitea.Tables.Category.Category;
 
 
-//@Entity(tableName = "tea_table",foreignKeys = @ForeignKey(entity = ULocale.Category.class,
-  //                                              parentColumns = "id",
-    //                                            childColumns = "categoryId",
-      //                                          onDelete = CASCADE))
-@Entity (tableName = "tea_table")
+@Entity(tableName = "tea_table")
 public class Tea {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int idTea;
 
     private String title;
 
@@ -25,7 +22,6 @@ public class Tea {
 
     private int price ;
 
-   // private int categoryId;
 
 
     public Tea(String title, String description, int price)
@@ -33,18 +29,16 @@ public class Tea {
         this.title = title;
         this.description = description;
         this.price = price;
-        //this.categoryId = categoryId;
     }
 
-    //Only need this setter because we didn't put it in the constructor
-    public void setId(int id) {
-        this.id = id;
+    public void setIdTea(int idTea) {
+        this.idTea = idTea;
     }
 
 
     //GETTERS
-    public int getId() {
-        return id;
+    public int getIdTea() {
+        return idTea;
     }
 
     public String getTitle() {
@@ -58,8 +52,4 @@ public class Tea {
     public int getPrice() {
         return price;
     }
-
-    //public int getCategoryId() {
-       // return categoryId;
-   // }
 }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikitea.R;
+import com.example.wikitea.Tables.Category.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,8 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
         Tea currentTea = teas.get(position);
         holder.textViewTitle.setText(currentTea.getTitle());
         holder.textViewDescription.setText(currentTea.getDescription());
-        holder.textViewId.setText(String.valueOf(currentTea.getId()));
+        holder.textViewId.setText(String.valueOf(currentTea.getIdTea()));
+
     }
 
     @Override
@@ -51,6 +53,7 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
     {
         return teas.get(position);
     }
+
 
 
 

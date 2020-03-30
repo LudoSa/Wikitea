@@ -6,14 +6,21 @@
     <string name="text_welcome">Welcome</string>
     <string name="title">Select type of tea:</string>
     <string name="action_search"></string>
+
     <string name="action_settings">settings</string>
     <string name="action_favorite">favorite</string>
     <string name="action_delete_all_categories">delete all categories</string>
     <string name="action_add">add</string>
+
     <string name="description_BlackTea">Description</string>
+
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_about">About the app</string>
+
     <string name="hello_blank_fragment">hello</string>
+
+    <string name="botnav_teas">teas</string>
+    <string name="botnav_categories">category</string>
 </resources>
