@@ -1,18 +1,42 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- Base application theme: DAY theme-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="background">@color/background</item>
-
+        <item name="backgroundColor">@color/backgroundColor</item>
+        <item name="cardBackgroundColor">@color/backgroundColor</item>
+        <item name="textColor">@color/textColor</item>
+        <item name="tintMode">@color/colorPrimary</item>
+        <item name="buttoncolor">@color/colorPrimaryDark</item>
+        <item name="toolbarColor">@color/colorPrimary</item>
     </style>
 
 
-        <!-- Toolbar theme -->
+    <!-- DARK theme-->
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">#000000</item>
+        <item name="cardBackgroundColor">#424242</item>
+        <item name="backgroundColor">#606060</item>
+        <item name="textColor">#ffffff</item>
+        <!--<item name="tintMode">#ffffff</item> -->
+        <item name="buttoncolor">@color/colorPrimary</item>
+    <!--<item name="toolbarColor">@color/backgroundColor</item> -->
+        <item name="toolbarColor">#607090</item>
+</style>
+
+
+
+
+<!-- Toolbar theme -->
+
+    <!--
     <style name="ToolbarStyle" parent="Theme.AppCompat.Light">
-        <item name="android:background">@color/toolbar</item>
+        <item name="android:background">?attr/toolbarColor </item>
     </style>
+    -->
 
 </resources>

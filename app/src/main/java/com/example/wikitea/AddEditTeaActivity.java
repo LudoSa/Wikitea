@@ -2,6 +2,7 @@ package com.example.wikitea;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
     public static final String EXTRA_TITLE = "com.example.wikitea.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.wikitea.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRICE = "com.example.wikitea.EXTRA_PRICE";
+    public static final String EXTRA_IDCATEGORY = "com.example.wikitea.EXTRA_IDCATEGORY" ;
 
     private EditText editTextTitle;
     private EditText editTextDescription;
@@ -29,6 +31,12 @@ public class AddEditTeaActivity extends AppCompatActivity {
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //DARK/LIGHT THEME
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.DarkTheme);
+        } else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tea);
 

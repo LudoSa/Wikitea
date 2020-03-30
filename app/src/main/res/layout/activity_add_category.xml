@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddEditCategoryActivity">
+    tools:context=".AddEditCategoryActivity"
+    android:background="?attr/backgroundColor">
 
 
     <EditText
@@ -16,7 +17,8 @@
         android:hint="Name of category"
         android:inputType="text"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:textColor="?attr/textColor"/>
 
     <EditText
         android:id="@+id/edit_text_virtues"
@@ -26,7 +28,8 @@
         android:hint="Virtues"
         android:inputType="textMultiLine"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_name"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        android:textColor="?attr/textColor"/>
 
     <include
         android:id="@+id/toolbar"

@@ -4,4 +4,5 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/ToolbarStyle"></androidx.appcompat.widget.Toolbar>
+    android:background="?attr/toolbarColor"
+    ></androidx.appcompat.widget.Toolbar>

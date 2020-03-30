@@ -9,7 +9,6 @@ public class TeaDetailActivity extends AppCompatActivity {
 
     TextView textView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

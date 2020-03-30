@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- day -->
+
+    <!-- Color's name -->
     <color name="colorPrimary">#BD00C438</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#008A3C</color>
+    <color name="backgroundColor">#D3DFB8</color>
+    <color name="toolbarColor">#DCF763</color>
     <color name="background">#D3DFB8</color>
-    <color name="toolbar">#DCF763</color>
-
-    <!-- night -->
-    <color name="colorPrimaryNight">#16202c</color>
-    <color name="colorPrimaryDarkNight">#141d26</color>
-    <color name="colorAccentNight">#ffffff</color>
-    <color name="backgroundNight">#191818</color>
-    <color name="toolbarNight">#292828</color>
-
+    <color name="textColor">#808080</color>
 
 </resources>
