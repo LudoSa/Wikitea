@@ -19,11 +19,12 @@ public class AddEditTeaActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "com.example.wikitea.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.example.wikitea.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.wikitea.EXTRA_DESCRIPTION";
-    public static final String EXTRA_PRICE = "com.example.wikitea.EXTRA_PRICE";
+    public static final String EXTRA_ORIGIN = "com.example.wikitea.EXTRA_ORIGIN";
+    public static final String EXTRA_IDCATEGORYTEA = "com.example.wikitea.EXTRA_IDCATEGORY";
 
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private NumberPicker numberPickerId;
+    private EditText editTextOrigin;
 
 
     @SuppressLint("WrongViewCast")
@@ -38,11 +39,9 @@ public class AddEditTeaActivity extends AppCompatActivity {
 
 
 
-
-
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
-        //numberPickerId = findViewById(R.id.n)
+        editTextOrigin = findViewById(R.id.edit_text_origin);
 
 
         //contains id, title, price
@@ -54,7 +53,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
             setTitle("Edit Tea");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
-            //edit.setText(intent.getStringExtra(EXTRA_ID));
+            editTextOrigin.setText(intent.getStringExtra(EXTRA_ORIGIN));
 
         }
         else
@@ -69,7 +68,11 @@ public class AddEditTeaActivity extends AppCompatActivity {
     {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        int price = 0; // = edit  .getValue();
+        String origin = editTextOrigin.getText().toString();
+
+        //Get the categoryId
+        Bundle categoryIntent = getIntent().getExtras();
+        int categoryId = categoryIntent.getInt("EXTRA_CATEGORY_ID");
 
         if(title.trim().isEmpty() || description.trim().isEmpty())
         {
@@ -80,7 +83,9 @@ public class AddEditTeaActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.putExtra(EXTRA_TITLE,title);
         data.putExtra(EXTRA_DESCRIPTION,description);
-        data.putExtra(EXTRA_PRICE,price);
+        data.putExtra(EXTRA_ORIGIN,origin);
+        data.putExtra(EXTRA_IDCATEGORYTEA, categoryId);
+
 
         int id = getIntent().getIntExtra(EXTRA_ID,-1);
         if(id != -1)

@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wikitea.Tables.Category.Category;
 import com.example.wikitea.Tables.Category.CategoryAdapter;
 import com.example.wikitea.Tables.Category.CategoryViewModel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -50,9 +49,6 @@ public class CategoryActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Bottom navbar
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
 
         //Button to add a new category
@@ -107,6 +103,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         }).attachToRecyclerView(recyclerView);
 
+
         //Set long click action on an item in the recyclerview
         adapter.setOnItemLongClickListener(new CategoryAdapter.OnItemLongClickListener() {
             @Override
@@ -126,6 +123,7 @@ public class CategoryActivity extends AppCompatActivity {
             public void onItemClick(Category category)
             {
                 Intent intent = new Intent(CategoryActivity.this, TeaActivity.class);
+                intent.putExtra("EXTRA_CATEGORY_ID", category.getIdCategory());
                 startActivity(intent);
 
             }
@@ -193,14 +191,15 @@ public class CategoryActivity extends AppCompatActivity {
                         .replace(android.R.id.content, new SettingsFrag()).addToBackStack(null)
                         .commit();
 
-            case R.id.action_search:
-
-                return true;
-
 
             case R.id.action_delete_all_categories:
                 categoryViewModel.deleteAllCategories();
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.action_favorite:
+                Intent intent = new Intent(CategoryActivity.this, FavoriteActivity.class);
+                startActivity(intent);
                 return true;
 
             default:
@@ -211,25 +210,5 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
 
-
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            switch(item.getItemId()){
-
-                case R.id.action_category:
-                    return true;
-
-                case R.id.action_tea:
-                    Intent intent = new Intent(CategoryActivity.this, TeaActivity.class);
-                    startActivity(intent);
-                    return true;
-            }
-
-            return false;
-
-        }
-    };
 
 }

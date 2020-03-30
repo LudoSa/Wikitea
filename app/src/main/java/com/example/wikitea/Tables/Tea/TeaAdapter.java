@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikitea.R;
 import com.example.wikitea.Tables.Category.Category;
+import com.example.wikitea.Tables.Favourite.Favorite;
+import com.example.wikitea.Tables.Favourite.FavoriteAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
 
     private List<Tea> teas = new ArrayList<>();
+    private OnItemLongClickListener longClickListener;
     private OnItemClickListener listener;
 
     @NonNull
@@ -34,6 +37,7 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
         holder.textViewTitle.setText(currentTea.getTitle());
         holder.textViewDescription.setText(currentTea.getDescription());
         holder.textViewId.setText(String.valueOf(currentTea.getIdTea()));
+
 
     }
 
@@ -69,6 +73,19 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewId = itemView.findViewById(R.id.text_view_id);
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    if(longClickListener != null && position != RecyclerView.NO_POSITION){
+                        longClickListener.onItemLongClick(teas.get(position));
+                    }
+                    return false;
+                }
+            });
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,6 +98,15 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
 
         }
     }
+
+    //Long click
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Tea tea);
+    }
+    public void setOnItemLongClickListener(TeaAdapter.OnItemLongClickListener listener) {
+        this.longClickListener = listener;
+    }
+
 
     public interface OnItemClickListener{
         void onItemClick(Tea tea);

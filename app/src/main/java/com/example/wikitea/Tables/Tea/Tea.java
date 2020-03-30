@@ -10,7 +10,10 @@ import androidx.room.PrimaryKey;
 import com.example.wikitea.Tables.Category.Category;
 
 
-@Entity(tableName = "tea_table")
+@Entity(tableName = "tea_table", foreignKeys = @ForeignKey(entity = Category.class,
+        parentColumns = "idCategory",
+        childColumns = "idCategory",
+        onDelete = ForeignKey.CASCADE))
 public class Tea {
 
     @PrimaryKey(autoGenerate = true)
@@ -20,16 +23,21 @@ public class Tea {
 
     private String description;
 
-    private int price ;
+    private String origin ;
+
+    @ColumnInfo(name = "idCategory")
+    private int idCategoryTea;
 
 
-
-    public Tea(String title, String description, int price)
+    public Tea(String title, String description, String origin, int idCategoryTea)
     {
         this.title = title;
         this.description = description;
-        this.price = price;
+        this.origin = origin;
+        this.idCategoryTea = idCategoryTea;
     }
+
+    public void setIdCategoryTea(int idCategoryTea) { this.idCategoryTea = idCategoryTea; }
 
     public void setIdTea(int idTea) {
         this.idTea = idTea;
@@ -49,7 +57,11 @@ public class Tea {
         return description;
     }
 
-    public int getPrice() {
-        return price;
+    public String getOrigin() {
+        return origin;
+    }
+
+    public int getIdCategoryTea() {
+        return idCategoryTea;
     }
 }
