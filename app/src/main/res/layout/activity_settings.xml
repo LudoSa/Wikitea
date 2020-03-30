@@ -16,14 +16,16 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_theme"
         android:textOff="@string/settings_theme_dark"
-        android:textOn="@string/settings_theme_light" />
+        android:textOn="@string/settings_theme_light"
+        android:textColor="?attr/textColor"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_aboutApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings_about"
-       />
+        android:textColor="?attr/textColor"/>
+
 
 
 

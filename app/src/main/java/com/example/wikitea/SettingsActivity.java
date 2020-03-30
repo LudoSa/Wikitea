@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
             aSwitch.setChecked(true);
         }
 
-        button_aboutApp = findViewById(R.id.button2);
+        button_aboutApp = findViewById(R.id.button_aboutApp);
 
         button_aboutApp.setOnClickListener(new View.OnClickListener() {
             @Override

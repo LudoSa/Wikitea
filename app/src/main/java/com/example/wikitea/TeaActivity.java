@@ -1,6 +1,7 @@
 package com.example.wikitea;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,13 @@ public class TeaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //DARK/LIGHT THEME
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.DarkTheme);
+        } else setTheme(R.style.AppTheme);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tea);
 
@@ -190,15 +198,16 @@ public class TeaActivity extends AppCompatActivity {
 //Toolbar options
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
-
-                getFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, new SettingsFrag()).addToBackStack(null)
-                        .commit();
+                intent = new Intent(TeaActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
 
             case R.id.action_favorite:
-                Intent intent = new Intent(TeaActivity.this, FavoriteActivity.class);
+                intent = new Intent(TeaActivity.this, FavoriteActivity.class);
                 startActivity(intent);
                 return true;
 

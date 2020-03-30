@@ -9,12 +9,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.wikitea.Tables.Admin.Admin;
+import com.example.wikitea.Tables.Admin.AdminDao;
 import com.example.wikitea.Tables.Category.Category;
 import com.example.wikitea.Tables.Category.CategoryDao;
 import com.example.wikitea.Tables.Favourite.Favorite;
 import com.example.wikitea.Tables.Favourite.FavoriteDao;
 
-@Database(entities = {Tea.class, Category.class, Favorite.class}, version = 2, exportSchema = false)
+@Database(entities = {Tea.class, Category.class, Favorite.class, Admin.class}, version = 2, exportSchema = false)
 public abstract class TeaDatabase extends RoomDatabase {
 
     private static TeaDatabase instance;
@@ -22,6 +24,7 @@ public abstract class TeaDatabase extends RoomDatabase {
     public abstract TeaDao teaDao();
     public abstract CategoryDao categoryDao();
     public abstract FavoriteDao favoriteDao();
+    public abstract AdminDao adminDao();
     public static synchronized com.example.wikitea.Tables.Tea.TeaDatabase getInstance(Context context){
 
         if (instance == null){
@@ -49,31 +52,38 @@ public abstract class TeaDatabase extends RoomDatabase {
 
         private TeaDao teaDao;
         private CategoryDao categoryDao;
-        private  FavoriteDao favoriteDao;
+        private FavoriteDao favoriteDao;
+        private AdminDao adminDao;
 
         private PopulateDbAsyncTask(TeaDatabase db){
             teaDao = db.teaDao();
             categoryDao = db.categoryDao();
             favoriteDao = db.favoriteDao();
+            adminDao = db.adminDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            categoryDao.insert(new Category("Category 1", "Good"));
-            categoryDao.insert(new Category("Category 2", "Good"));
-            categoryDao.insert(new Category("Category 3", "Good"));
-            categoryDao.insert(new Category("Category 4", "Good"));
 
+            //Creation of the categories into the DB
+            categoryDao.insert(new Category("Category 1", "Good for sleeping"));
+            categoryDao.insert(new Category("Category 2", "Good against cancer"));
+            categoryDao.insert(new Category("Category 3", "Good for your body"));
+            categoryDao.insert(new Category("Category 4", "Relax your brain"));
 
+            //Creation of the teas into the DB
             teaDao.insert(new Tea("First Tea !","Good tea","China", 1));
             teaDao.insert(new Tea("Second Tea !","Excellent tea","China",1));
             teaDao.insert(new Tea("Third Tea !","Bad tea","Europe", 2));
             teaDao.insert(new Tea("Fourth Tea !","Disgusting tea","Europe", 2));
             teaDao.insert(new Tea("Fifth Tea !","Very good tea","USA", 3));
             teaDao.insert(new Tea("Sixth Tea !","Good tea","USA", 4));
+
+            //Creation of the administrators into the DB
+            adminDao.insert(new Admin("Ludovic", "ludovic"));
+            adminDao.insert(new Admin("Alex", "alex"));
             return null;
 
         }
     }
-
 }

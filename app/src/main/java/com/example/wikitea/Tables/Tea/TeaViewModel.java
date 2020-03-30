@@ -19,7 +19,7 @@ public class TeaViewModel extends AndroidViewModel {
 
     public TeaViewModel(@NonNull Application application, int id) {
         super(application);
-        this.application = application;
+      //  this.application = application;
 
         repository = new TeaRepository(application);
 

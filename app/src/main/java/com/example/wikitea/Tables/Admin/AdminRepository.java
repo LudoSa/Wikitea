@@ -5,45 +5,27 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.wikitea.BaseApp;
-import com.example.wikitea.Tables.Admin.Admin;
-import com.example.wikitea.Tables.Admin.AdminDao;
-import com.example.wikitea.Tables.Admin.AdminDatabase;
-
-import java.util.List;
+import com.example.wikitea.Tables.Tea.TeaDatabase;
 
 public class AdminRepository {
 
     private AdminDao adminDao;
-    private LiveData<List<Admin>> allAdmins;
-    private static AdminRepository instance;
+    private LiveData<Admin> adminByName;
+    String name;
+
 
     //Constructor
     public AdminRepository(Application application){
 
-        AdminDatabase database = AdminDatabase.getInstance(application);
-        //adminDao = database.admindao();
-        allAdmins = adminDao.getAllAdmins();
+        TeaDatabase database = TeaDatabase.getInstance(application);
+        adminDao = database.adminDao();
+        adminByName = adminDao.getAdminByName(name);
     }
 
 
-    private AdminRepository()
+    public LiveData<Admin> getAdminByName(String adminName)
     {
-    }
-
-    public static AdminRepository getInstance() {
-        if (instance == null) {
-            synchronized (AdminRepository.class) {
-                if (instance == null) {
-                    instance = new AdminRepository();
-                }
-            }
-        }
-        return instance;
-    }
-
-    public LiveData<Admin> getAdmin(final String adminId, Application application) {
-        return ((BaseApp) application).getDatabase().adminDao().getById(adminId);
+        return adminDao.getAdminByName(adminName);
     }
 
 
@@ -56,23 +38,17 @@ public class AdminRepository {
         new InsertAdminAsyncTask(adminDao).execute(admin);
 
     }
-
     public void update(Admin admin){
 
         new UpdateAdminAsyncTask(adminDao).execute(admin);
 
     }
-
     public void delete(Admin admin){
 
         new DeleteAdminAsyncTask(adminDao).execute(admin);
 
     }
 
-    public LiveData<List<Admin>> getAllAdmins(){
-
-        return allAdmins;
-    }
 
     private static class InsertAdminAsyncTask extends AsyncTask<Admin, Void, Void>{
 

@@ -22,7 +22,6 @@
         <item name="cardBackgroundColor">#424242</item>
         <item name="backgroundColor">#606060</item>
         <item name="textColor">#ffffff</item>
-        <!--<item name="tintMode">#ffffff</item> -->
         <item name="buttoncolor">@color/colorPrimary</item>
     <!--<item name="toolbarColor">@color/backgroundColor</item> -->
         <item name="toolbarColor">#607090</item>

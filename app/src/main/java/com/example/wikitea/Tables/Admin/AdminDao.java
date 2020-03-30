@@ -15,8 +15,8 @@ import java.util.List;
 @Dao
 public interface AdminDao
 {
-        @Query("SELECT * FROM admin_table WHERE name = :id")
-        LiveData<Admin> getById(String id);
+        @Query("SELECT * FROM admin_table WHERE name = :adminName")
+        LiveData<Admin> getAdminByName(String adminName);
 
         @Query("SELECT * FROM admin_table")
         LiveData<List<Admin>> getAllAdmins();
@@ -29,6 +29,7 @@ public interface AdminDao
 
         @Delete
         void delete(Admin admin);
+
 
 
 }

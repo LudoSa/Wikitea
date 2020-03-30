@@ -23,13 +23,14 @@ public TeaRepository(Application application)
     TeaDatabase database = TeaDatabase.getInstance(application);
     teaDao = database.teaDao();
     allTeasById = teaDao.getAllTeasByCategory(id);
-
 }
 
+    public LiveData<List<Tea>> getAllTeasById(int id)
+    {
+        return teaDao.getAllTeasByCategory(id);
+    }
 
 
-    //REPOSITERY:
-        //ALL OF THESE METHODS ARE API REPOSITORY EXPOSED TO THE OUTSIDE.
     public void insert(Tea tea)
     {
         new InsertTeaAsyncTask(teaDao).execute(tea);
@@ -50,10 +51,7 @@ public void deleteAllTeas()
 new DeleteAllTeasAsyncTask(teaDao).execute();
 }
 
-    public LiveData<List<Tea>> getAllTeasById(int id) {
 
-        return teaDao.getAllTeasByCategory(id);
-    }
 
 
 

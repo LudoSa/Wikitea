@@ -20,7 +20,6 @@ public interface TeaDao
 
     @Delete
     void delete(Tea tea);
-    //IL SERA POSSIBLE DE SUPPRIMER DES LISTES ;) = DELETE ALL TEA FROM CATEGORY
 
     @Query("SELECT * FROM tea_table WHERE idCategory = :id")
     LiveData<List<Tea>> getAllTeasByCategory(int id);

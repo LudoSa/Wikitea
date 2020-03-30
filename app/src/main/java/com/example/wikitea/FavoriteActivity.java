@@ -3,6 +3,7 @@ package com.example.wikitea;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -27,6 +28,14 @@ public class FavoriteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //DARK/LIGHT THEME
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.DarkTheme);
+        } else setTheme(R.style.AppTheme);
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
 

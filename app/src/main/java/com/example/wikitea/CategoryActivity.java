@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -32,7 +33,6 @@ public class CategoryActivity extends AppCompatActivity {
     public static final int ADD_CATEGORY_REQUEST = 1;
     public static final int EDIT_CATEGORY_REQUEST = 2;
 
-
     private CategoryViewModel categoryViewModel;
 
 
@@ -40,6 +40,13 @@ public class CategoryActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //DARK/LIGHT THEME
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.DarkTheme);
+        } else setTheme(R.style.AppTheme);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
@@ -88,7 +95,6 @@ public class CategoryActivity extends AppCompatActivity {
         //Swipe delete item
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
 
-
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -99,8 +105,6 @@ public class CategoryActivity extends AppCompatActivity {
                 categoryViewModel.delete(adapter.getCategoryAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(CategoryActivity.this, "Category deleted", Toast.LENGTH_LONG).show();
             }
-
-
         }).attachToRecyclerView(recyclerView);
 
 
@@ -183,13 +187,13 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        Intent intent;
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-
-                getFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, new SettingsFrag()).addToBackStack(null)
-                        .commit();
+                intent = new Intent(CategoryActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
 
 
             case R.id.action_delete_all_categories:
@@ -198,12 +202,11 @@ public class CategoryActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_favorite:
-                Intent intent = new Intent(CategoryActivity.this, FavoriteActivity.class);
+                intent = new Intent(CategoryActivity.this, FavoriteActivity.class);
                 startActivity(intent);
                 return true;
 
             default:
-
                 return super.onOptionsItemSelected(item);
 
         }
