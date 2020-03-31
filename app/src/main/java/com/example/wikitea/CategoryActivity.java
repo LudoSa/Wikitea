@@ -200,6 +200,7 @@ public class CategoryActivity extends AppCompatActivity {
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
                 return true;
 
+
             default:
                 return super.onOptionsItemSelected(item);
         }
