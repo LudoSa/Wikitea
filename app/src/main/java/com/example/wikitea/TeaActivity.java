@@ -25,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+//Class for tea's activity
 public class TeaActivity extends AppCompatActivity {
     public static final int ADD_TEA_REQUEST = 1;
     public static final int EDIT_TEA_REQUEST = 2;
@@ -76,7 +77,6 @@ public class TeaActivity extends AppCompatActivity {
 
         teas = new ArrayList<>();
         TeaViewModel.Factory factory = new TeaViewModel.Factory(getApplication(), categoryId);
-        //teaViewModel = new TeaViewModel(this.getApplication(), categoryId);
         teaViewModel = ViewModelProviders.of(this, factory).get(TeaViewModel.class);
         teaViewModel.getAllTeasByCategory(categoryId).observe(this, (List<Tea> teaList) ->{
             if (teaList != null) {
@@ -135,8 +135,6 @@ public class TeaActivity extends AppCompatActivity {
                 startActivityForResult(intent, EDIT_TEA_REQUEST);
             }
         });
-
-
     }
 
     @Override
@@ -148,35 +146,38 @@ public class TeaActivity extends AppCompatActivity {
         int categoryId = categoryIntent.getIntExtra("EXTRA_CATEGORY_ID", 0);
 
 
-        //Save a new tea
+        //Get the values from AddEditTeaActivity
         if (requestCode == ADD_TEA_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
             int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
 
+            //Create a new tea
             Tea tea = new Tea(title, description, origin, categoryTeaId);
             teaViewModel.insert(tea);
             Toast.makeText(this, "Tea saved", Toast.LENGTH_SHORT).show();
 
             //Edit a tea
-        } else if (requestCode == EDIT_TEA_REQUEST && resultCode == RESULT_OK) { // EDIT A TEA
-            int id = data.getIntExtra(AddEditTeaActivity.EXTRA_ID, -1);
+        } else if (requestCode == EDIT_TEA_REQUEST && resultCode == RESULT_OK) {
 
+            //Get the id from the tea we selected
+            int id = data.getIntExtra(AddEditTeaActivity.EXTRA_ID, -1);
 
             if (id == -1) {
                 Toast.makeText(this, "Tea can't be updated", Toast.LENGTH_SHORT).show();
                 return;
             }
-        //receive information from AddEditTeaActivity
+
+            //receive information from AddEditTeaActivity
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
             int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
 
-
             Tea tea = new Tea(title, description, origin, categoryId);
             tea.setIdTea(id);
+
             //Update with the new tea
             teaViewModel.update(tea);
 
@@ -195,15 +196,17 @@ public class TeaActivity extends AppCompatActivity {
     }
 
 
-//Toolbar options
+    //Toolbar options
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
-                intent = new Intent(TeaActivity.this, SettingsActivity.class);
-                startActivity(intent);
+
+                //OPEN FRAGMENT SETTING
+                getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).addToBackStack(null).commit();
+
                 return true;
 
             case R.id.action_favorite:

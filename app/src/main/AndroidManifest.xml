@@ -12,7 +12,6 @@
         <activity android:name=".FavoriteActivity"/>
         <activity android:name=".AddEditCategoryActivity" />
         <activity android:name=".AddEditTeaActivity" />
-        <activity android:name=".SettingsActivity"/>
 
         <meta-data
             android:name="com.google.android.actions"

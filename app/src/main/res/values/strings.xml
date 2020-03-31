@@ -6,8 +6,8 @@
     <string name="text_welcome">Welcome</string>
     <string name="title">Select type of tea:</string>
     <string name="action_search"></string>
-<string name="about_app">Our application is a distributor of teas. When you logged, you can see a list of categories. If you click on it
-you will see another list of teas from this category.</string>
+<string name="about_app">Our application is a Wiki of teas. When you logged, you can see a list of categories. If you click on it
+you will see the list of teas from this category. You are free to delete, modify or add any tea or category !</string>
     <string name="action_settings">settings</string>
     <string name="action_favorite">favorite</string>
     <string name="action_delete_all_categories">delete all categories</string>
@@ -19,9 +19,10 @@ you will see another list of teas from this category.</string>
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
-    <string name="settings_about">About the app</string>
+    <string name="settings_about">About the App</string>
     <string name="error_invalid_password">Wrong password</string>
-    <string name="error_invalid_email">Wrong mail</string>
+    <string name="error_invalid_email">Wrong username</string>
+    <string name="authors">Ludovic &amp; Alexandre</string>
 
 
 </resources>

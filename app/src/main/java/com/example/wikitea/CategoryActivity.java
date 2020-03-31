@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,14 +28,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-//Class for tea's categories
+//Class for category's activity
 public class CategoryActivity extends AppCompatActivity {
 
     public static final int ADD_CATEGORY_REQUEST = 1;
     public static final int EDIT_CATEGORY_REQUEST = 2;
 
     private CategoryViewModel categoryViewModel;
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -51,11 +51,9 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
 
 
-
         //toolbar
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         //Button to add a new category
@@ -65,16 +63,12 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //Open the add/edit activity
                 Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
                 startActivityForResult(intent, ADD_CATEGORY_REQUEST);
-
             }
         });
 
-
-
-
-        //List of categories
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -82,11 +76,13 @@ public class CategoryActivity extends AppCompatActivity {
         final CategoryAdapter adapter = new CategoryAdapter();
         recyclerView.setAdapter(adapter);
 
+        //List of categories from the viewmodel, from the activity
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         categoryViewModel.getAllCategories().observe(this, new Observer<List<Category>>() {
 
             @Override
-            public void onChanged(List<Category> categories) {
+            public void onChanged(List<Category> categories)
+            {
                 //Create entities in the list
                 adapter.setCategories(categories);
             }
@@ -102,6 +98,8 @@ public class CategoryActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                //Delete the Category we selected (with the position)
                 categoryViewModel.delete(adapter.getCategoryAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(CategoryActivity.this, "Category deleted", Toast.LENGTH_LONG).show();
             }
@@ -129,7 +127,6 @@ public class CategoryActivity extends AppCompatActivity {
                 Intent intent = new Intent(CategoryActivity.this, TeaActivity.class);
                 intent.putExtra("EXTRA_CATEGORY_ID", category.getIdCategory());
                 startActivity(intent);
-
             }
         });
 
@@ -140,19 +137,23 @@ public class CategoryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if (requestCode == ADD_CATEGORY_REQUEST && resultCode == RESULT_OK){
 
+            //Get the name and virtue of the category selected
             String name = data.getStringExtra(AddEditCategoryActivity.EXTRA_NAME);
             String virtue = data.getStringExtra(AddEditCategoryActivity.EXTRA_VIRTUES);
 
+
+            //Create a new Category with the 2 values and insert it
             Category category = new Category(name, virtue);
             categoryViewModel.insert(category);
 
             Toast.makeText(this, "category saved", Toast.LENGTH_LONG).show();
 
+
         } else  if (requestCode == EDIT_CATEGORY_REQUEST && resultCode == RESULT_OK){
 
+            //Get the id from the category we want to modify.
             int id = data.getIntExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, -1);
 
             if (id == -1){
@@ -160,9 +161,11 @@ public class CategoryActivity extends AppCompatActivity {
                 return;
             }
 
+            //Get the name and virtue of the category selected
             String name = data.getStringExtra(AddEditCategoryActivity.EXTRA_NAME);
             String virtue = data.getStringExtra(AddEditCategoryActivity.EXTRA_VIRTUES);
 
+            //Create a new Category with the 2 values and update it (in fact, overwrite it)
             Category category = new Category(name, virtue);
             category.setIdCategory(id);
             categoryViewModel.update(category);
@@ -171,10 +174,8 @@ public class CategoryActivity extends AppCompatActivity {
 
         }else {
             Toast.makeText(this, "category not saved", Toast.LENGTH_LONG).show();
-
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -187,14 +188,12 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent intent;
-
         switch (item.getItemId()) {
             case R.id.action_settings:
-                intent = new Intent(CategoryActivity.this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
 
+                //OPEN FRAGMENT SETTING
+                getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).addToBackStack(null).commit();
+                return true;
 
             case R.id.action_delete_all_categories:
                 categoryViewModel.deleteAllCategories();
@@ -202,16 +201,12 @@ public class CategoryActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_favorite:
-                intent = new Intent(CategoryActivity.this, FavoriteActivity.class);
+                Intent intent = new Intent(CategoryActivity.this, FavoriteActivity.class);
                 startActivity(intent);
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-
     }
-
-
 }

@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         //Make sure the admin does exist and writes the right password !
         private void attemptLogin()
         {
-            // Store values at the time of the login attempt.
+            // Store values at the time.
             String name = nameView.getText().toString();
             String password = passwordView.getText().toString();
 
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             AdminViewModel.Factory factory = new AdminViewModel.Factory(getApplication(), name);
             adminViewModel = ViewModelProviders.of(this, factory).get(AdminViewModel.class);
 
-
+            //Get the admin by his name
             adminViewModel.getAdminByName(name).observe(LoginActivity.this, admin -> {
 
                 if (admin != null)
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     //Test if it's the Right password
                     if (admin.getPassword().equals(password))
                     {
-                        //If yes, start the list of category's activity
+                        //If yes, start the category's activity
                         Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
                         startActivity(intent);
                         nameView.setText("");

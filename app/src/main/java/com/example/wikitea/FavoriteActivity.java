@@ -64,7 +64,6 @@ public class FavoriteActivity extends AppCompatActivity {
         //Swipe delete item
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
 
-
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -94,10 +93,6 @@ public class FavoriteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-
-                getFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, new SettingsFrag()).addToBackStack(null)
-                        .commit();
 
 
             case R.id.action_delete_all_favorites:
