@@ -11,10 +11,8 @@ import java.util.List;
 
 public class TeaRepository {
     private TeaDao teaDao;
-    private LiveData<List<Tea>> allTeas;
     private LiveData<List<Tea>> allTeasById;
     private int id;
-    private static TeaRepository instance;
 
 
 
@@ -29,7 +27,6 @@ public TeaRepository(Application application)
     {
         return teaDao.getAllTeasByCategory(id);
     }
-
 
     public void insert(Tea tea)
     {
@@ -50,10 +47,6 @@ public void deleteAllTeas()
 {
 new DeleteAllTeasAsyncTask(teaDao).execute();
 }
-
-
-
-
 
 private static class InsertTeaAsyncTask extends AsyncTask<Tea, Void, Void>
 {
@@ -113,6 +106,7 @@ private static class InsertTeaAsyncTask extends AsyncTask<Tea, Void, Void>
 
         private DeleteAllTeasAsyncTask(TeaDao teaDao)
         {
+
             this.teaDao = teaDao;
         }
 

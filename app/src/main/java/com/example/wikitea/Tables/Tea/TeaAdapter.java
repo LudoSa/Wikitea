@@ -9,13 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikitea.R;
-import com.example.wikitea.Tables.Category.Category;
-import com.example.wikitea.Tables.Favourite.Favorite;
-import com.example.wikitea.Tables.Favourite.FavoriteAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+//Set the tea adapter
 public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
 
     private List<Tea> teas = new ArrayList<>();
@@ -41,6 +40,8 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
 
     }
 
+
+    //Methods of adapter
     @Override
     public int getItemCount() {
         return teas.size();
@@ -60,7 +61,7 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
 
 
 
-
+    //Tea holder for tea activity xml
     class TeaHolder extends RecyclerView.ViewHolder{
 
         private TextView textViewTitle;
@@ -108,6 +109,7 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
     }
 
 
+    //Click
     public interface OnItemClickListener{
         void onItemClick(Tea tea);
     }

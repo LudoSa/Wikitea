@@ -22,11 +22,13 @@ public class AddEditTeaActivity extends AppCompatActivity {
     public static final String EXTRA_DESCRIPTION = "com.example.wikitea.EXTRA_DESCRIPTION";
     public static final String EXTRA_ORIGIN = "com.example.wikitea.EXTRA_ORIGIN";
     public static final String EXTRA_IDCATEGORYTEA = "com.example.wikitea.EXTRA_IDCATEGORY";
+    public static final String EXTRA_FAVORITE = "com.example.wikitea.EXTRA_FAVORITE";
 
     private EditText editTextTitle;
     private EditText editTextDescription;
     private EditText editTextOrigin;
 
+    private int favorite;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -52,7 +54,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
         editTextOrigin = findViewById(R.id.edit_text_origin);
 
 
-        //contains id, title, price
+        //contains id, title, description, origin
         Intent intent = getIntent();
 
         //Add or edit tea title
@@ -72,11 +74,14 @@ public class AddEditTeaActivity extends AppCompatActivity {
 
     }
 
+
+    //Save the tea and send data to TeaActivity for add or edit
     private void saveTea()
     {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
         String origin = editTextOrigin.getText().toString();
+
 
         //Get the categoryId
         Bundle categoryIntent = getIntent().getExtras();
@@ -94,7 +99,6 @@ public class AddEditTeaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_ORIGIN,origin);
         data.putExtra(EXTRA_IDCATEGORYTEA, categoryId);
 
-
         int id = getIntent().getIntExtra(EXTRA_ID,-1);
         if(id != -1)
         {
@@ -107,7 +111,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
     }
 
 
-
+//Set the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -115,6 +119,8 @@ public class AddEditTeaActivity extends AppCompatActivity {
         return true;
     }
 
+
+    //Menu options
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

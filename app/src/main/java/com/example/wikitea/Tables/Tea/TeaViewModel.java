@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.wikitea.Tables.Category.Category;
 
 import java.util.List;
 
@@ -19,7 +18,6 @@ public class TeaViewModel extends AndroidViewModel {
 
     public TeaViewModel(@NonNull Application application, int id) {
         super(application);
-      //  this.application = application;
 
         repository = new TeaRepository(application);
 
@@ -38,6 +36,10 @@ public class TeaViewModel extends AndroidViewModel {
     public void delete(Tea tea)
     {
         repository.delete(tea);
+    }
+
+    public void deleteAllTeas(){
+        repository.deleteAllTeas();
     }
 
     public LiveData<List<Tea>> getAllTeasByCategory(int id) {

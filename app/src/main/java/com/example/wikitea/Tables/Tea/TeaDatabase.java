@@ -13,20 +13,18 @@ import com.example.wikitea.Tables.Admin.Admin;
 import com.example.wikitea.Tables.Admin.AdminDao;
 import com.example.wikitea.Tables.Category.Category;
 import com.example.wikitea.Tables.Category.CategoryDao;
-import com.example.wikitea.Tables.Favourite.Favorite;
-import com.example.wikitea.Tables.Favourite.FavoriteDao;
 
-@Database(entities = {Tea.class, Category.class, Favorite.class, Admin.class}, version = 2, exportSchema = false)
+@Database(entities = {Tea.class, Category.class, Admin.class}, version = 1, exportSchema = false)
 public abstract class TeaDatabase extends RoomDatabase {
 
     private static TeaDatabase instance;
 
     public abstract TeaDao teaDao();
     public abstract CategoryDao categoryDao();
-    public abstract FavoriteDao favoriteDao();
     public abstract AdminDao adminDao();
     public static synchronized com.example.wikitea.Tables.Tea.TeaDatabase getInstance(Context context){
 
+        //If no insatnce, create a new db
         if (instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(), com.example.wikitea.Tables.Tea.TeaDatabase.class, "tea_database")
                     .fallbackToDestructiveMigration()
@@ -37,7 +35,7 @@ public abstract class TeaDatabase extends RoomDatabase {
         return instance;
 
     }
-
+//Populate the db
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
 
         @Override
@@ -52,13 +50,11 @@ public abstract class TeaDatabase extends RoomDatabase {
 
         private TeaDao teaDao;
         private CategoryDao categoryDao;
-        private FavoriteDao favoriteDao;
         private AdminDao adminDao;
 
         private PopulateDbAsyncTask(TeaDatabase db){
             teaDao = db.teaDao();
             categoryDao = db.categoryDao();
-            favoriteDao = db.favoriteDao();
             adminDao = db.adminDao();
         }
 
