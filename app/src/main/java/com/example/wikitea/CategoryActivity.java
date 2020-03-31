@@ -200,11 +200,6 @@ public class CategoryActivity extends AppCompatActivity {
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
                 return true;
 
-            case R.id.action_favorite:
-                Intent intent = new Intent(CategoryActivity.this, FavoriteActivity.class);
-                startActivity(intent);
-                return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

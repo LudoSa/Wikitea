@@ -64,14 +64,11 @@ public class AddEditTeaActivity extends AppCompatActivity {
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
             editTextOrigin.setText(intent.getStringExtra(EXTRA_ORIGIN));
-
         }
         else
         {
             setTitle("Add Tea");
         }
-
-
     }
 
 

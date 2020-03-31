@@ -19,12 +19,12 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     public static final String EXTRA_VIRTUES = "com.example.wikitea.EXTRA_VIRTUES";
 
 
-
     private EditText editTextName;
     private EditText editTextVirtues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         //DARK/LIGHT THEME
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
             setTheme(R.style.DarkTheme);
@@ -45,7 +45,6 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-
         if (intent.hasExtra(EXTRA_IDCATEGORY)){
             setTitle("Edit Category");
             editTextName.setText(intent.getStringExtra(EXTRA_NAME));
@@ -53,9 +52,6 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         }else{
             setTitle("Add Category");
         }
-
-
-
     }
 
     private void saveCategory()
