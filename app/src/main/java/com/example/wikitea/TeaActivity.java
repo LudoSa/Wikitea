@@ -15,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.wikitea.Tables.Favourite.Favorite;
-import com.example.wikitea.Tables.Favourite.FavoriteViewModel;
 import com.example.wikitea.Tables.Tea.Tea;
 import com.example.wikitea.Tables.Tea.TeaAdapter;
 import com.example.wikitea.Tables.Tea.TeaViewModel;
@@ -30,7 +28,6 @@ public class TeaActivity extends AppCompatActivity {
     public static final int EDIT_TEA_REQUEST = 2;
 
     private TeaViewModel teaViewModel;
-    private FavoriteViewModel favoriteViewModel;
     private List<Tea> teas;
 
     @Override
@@ -67,6 +64,7 @@ public class TeaActivity extends AppCompatActivity {
             }
         });
 
+        //Set the recycler for the generate the list
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -74,9 +72,9 @@ public class TeaActivity extends AppCompatActivity {
         final TeaAdapter adapter = new TeaAdapter();
         recyclerView.setAdapter(adapter);
 
+        //Set the list
         teas = new ArrayList<>();
         TeaViewModel.Factory factory = new TeaViewModel.Factory(getApplication(), categoryId);
-        //teaViewModel = new TeaViewModel(this.getApplication(), categoryId);
         teaViewModel = ViewModelProviders.of(this, factory).get(TeaViewModel.class);
         teaViewModel.getAllTeasByCategory(categoryId).observe(this, (List<Tea> teaList) ->{
             if (teaList != null) {
@@ -99,27 +97,6 @@ public class TeaActivity extends AppCompatActivity {
                 Toast.makeText(TeaActivity.this, "Tea deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
-
-
-
-        //Set long click action on a tea for add to favorites
-        adapter.setOnItemLongClickListener(new TeaAdapter.OnItemLongClickListener() {
-            @Override
-            public void onItemLongClick(Tea tea) {
-
-                Favorite favorite;
-
-                String title = tea.getTitle();
-                String description = tea.getDescription();
-                String origin = tea.getOrigin();
-
-                favorite = new Favorite (title, description, origin);
-
-                favorite.setIdFavorite(tea.getIdTea());
-
-                favoriteViewModel.insert(favorite);
-            }
-        });
 
 
         //For edit tea details
@@ -174,7 +151,6 @@ public class TeaActivity extends AppCompatActivity {
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
             int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
 
-
             Tea tea = new Tea(title, description, origin, categoryId);
             tea.setIdTea(id);
             //Update with the new tea
@@ -206,9 +182,9 @@ public class TeaActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.action_favorite:
-                intent = new Intent(TeaActivity.this, FavoriteActivity.class);
-                startActivity(intent);
+            case R.id.action_delete_all_teas:
+                teaViewModel.deleteAllTeas();
+                Toast.makeText(this, "All teas deleted", Toast.LENGTH_LONG).show();
                 return true;
 
             default:

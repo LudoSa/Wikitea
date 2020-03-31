@@ -26,10 +26,5 @@ public interface TeaDao
 
     @Query("DELETE FROM tea_table")
     void deleteAllTeas();
-
-    @Query("SELECT * FROM tea_table ORDER BY idTea DESC")
-    LiveData<List<Tea>> getAllTeas();
-
-
 }
 

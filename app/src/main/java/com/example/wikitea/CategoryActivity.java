@@ -71,10 +71,7 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-        //List of categories
+        //Set the recycler for the generate the list
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -82,6 +79,7 @@ public class CategoryActivity extends AppCompatActivity {
         final CategoryAdapter adapter = new CategoryAdapter();
         recyclerView.setAdapter(adapter);
 
+        //Set the list
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         categoryViewModel.getAllCategories().observe(this, new Observer<List<Category>>() {
 
@@ -201,10 +199,6 @@ public class CategoryActivity extends AppCompatActivity {
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
                 return true;
 
-            case R.id.action_favorite:
-                intent = new Intent(CategoryActivity.this, FavoriteActivity.class);
-                startActivity(intent);
-                return true;
 
             default:
                 return super.onOptionsItemSelected(item);

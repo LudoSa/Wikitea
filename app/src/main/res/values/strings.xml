@@ -6,13 +6,12 @@
     <string name="text_welcome">Welcome</string>
     <string name="title">Select type of tea:</string>
     <string name="action_search"></string>
-<string name="about_app">Our application is a distributor of teas. When you logged, you can see a list of categories. If you click on it
-you will see another list of teas from this category.</string>
+    <string name="about_app">Our application is a distributor of teas. When you logged, you can see a list of categories. If you click on it
+    you will see another list of teas from this category.</string>
     <string name="action_settings">settings</string>
-    <string name="action_favorite">favorite</string>
     <string name="action_delete_all_categories">delete all categories</string>
     <string name="action_add">add</string>
-    <string name="action_delete_all_favorites">delete all favorites</string>
+    <string name="action_delete_all_teas">delete all teas</string>
 
     <string name="description_BlackTea">Description</string>
 

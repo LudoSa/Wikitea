@@ -29,6 +29,7 @@ public class Tea {
     private int idCategoryTea;
 
 
+
     public Tea(String title, String description, String origin, int idCategoryTea)
     {
         this.title = title;
@@ -64,4 +65,5 @@ public class Tea {
     public int getIdCategoryTea() {
         return idCategoryTea;
     }
+
 }

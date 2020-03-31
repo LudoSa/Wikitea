@@ -42,6 +42,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminHolder>
 
         this.admins = admins;
         notifyDataSetChanged();
+
     }
 
     public Admin getAdminAt(int position) {
