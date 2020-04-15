@@ -37,6 +37,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+        
+        //YOOO LUDO
+        //TEST 1ST PUSH WITH A NEW BRANCH
+
+
+
+
         //DARK/LIGHT THEME
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.DarkTheme);
