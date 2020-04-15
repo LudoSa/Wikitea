@@ -38,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        
-        //YOOO LUDO
+
+        //YO LUDO
         //TEST 1ST PUSH WITH A NEW BRANCH
 
 
