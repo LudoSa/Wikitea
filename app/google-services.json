@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "395989231375",
+    "firebase_url": "https://androidstudio-wikitea.firebaseio.com",
+    "project_id": "androidstudio-wikitea",
+    "storage_bucket": "androidstudio-wikitea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395989231375:android:715ac393183bd37e8a407a",
+        "android_client_info": {
+          "package_name": "com.example.wikitea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395989231375-8j716ifv9viltrhbu3af482a2p3ftnsb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wikitea",
+            "certificate_hash": "0eefe2763b882429bcc9b6ccd83a081f4dfd5ba2"
+          }
+        },
+        {
+          "client_id": "395989231375-lfhinctj8q9gqkorb5gitgjr129q77lf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk9fnrdOvoCnRtTy228SYbflADZ_fznWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395989231375-lfhinctj8q9gqkorb5gitgjr129q77lf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
