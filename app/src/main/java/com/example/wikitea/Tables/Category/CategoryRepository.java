@@ -5,22 +5,15 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.wikitea.Tables.Tea.TeaDatabase;
-import com.example.wikitea.Tables.Tea.TeaRepository;
-
 import java.util.List;
 
 public class CategoryRepository {
-
-    private CategoryDao categoryDao;
     private LiveData<List<Category>> allCategories;
 
 
 
     public CategoryRepository(Application application){
 
-        TeaDatabase database = TeaDatabase.getInstance(application);
-        categoryDao = database.categoryDao();
         allCategories = categoryDao.getAllCategories();
     }
 

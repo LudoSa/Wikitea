@@ -10,13 +10,8 @@ import androidx.room.PrimaryKey;
 import com.example.wikitea.Tables.Category.Category;
 
 
-@Entity(tableName = "tea_table", foreignKeys = @ForeignKey(entity = Category.class,
-        parentColumns = "idCategory",
-        childColumns = "idCategory",
-        onDelete = ForeignKey.CASCADE))
 public class Tea {
 
-    @PrimaryKey(autoGenerate = true)
     private int idTea;
 
     private String title;
@@ -25,7 +20,6 @@ public class Tea {
 
     private String origin ;
 
-    @ColumnInfo(name = "idCategory")
     private int idCategoryTea;
 
 
