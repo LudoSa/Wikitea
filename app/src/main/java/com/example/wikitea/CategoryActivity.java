@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikitea.Tables.Category.Category;
 import com.example.wikitea.Tables.Category.CategoryAdapter;
+import com.example.wikitea.Tables.Category.CategoryListLiveData;
+import com.example.wikitea.Tables.Category.CategoryListViewModel;
 import com.example.wikitea.Tables.Category.CategoryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,6 +38,9 @@ public class CategoryActivity extends AppCompatActivity {
     public static final int EDIT_CATEGORY_REQUEST = 2;
 
     private CategoryViewModel categoryViewModel;
+    private CategoryListViewModel viewModelList;
+    private List<Category> categories;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -42,7 +48,7 @@ public class CategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         //DARK/LIGHT THEME
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.DarkTheme);
         } else setTheme(R.style.AppTheme);
 
@@ -76,17 +82,23 @@ public class CategoryActivity extends AppCompatActivity {
         final CategoryAdapter adapter = new CategoryAdapter();
         recyclerView.setAdapter(adapter);
 
-        //List of categories from the viewmodel, from the activity
-        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
-        categoryViewModel.getAllCategories().observe(this, new Observer<List<Category>>() {
 
-            @Override
-            public void onChanged(List<Category> categories)
-            {
-                //Create entities in the list
+        //List of categories from the viewmodel, from the activity
+        CategoryListViewModel.Factory factory = new CategoryListViewModel.Factory(
+                getApplication());
+
+
+        viewModelList = new ViewModelProvider(this, factory).get(CategoryListViewModel.class);
+        viewModelList.getCategories().observe(this, categories_firebases -> {
+            if (categories_firebases != null) {
+                categories = (List<Category>) categories_firebases;
                 adapter.setCategories(categories);
             }
         });
+
+
+        /*
+
 
         //Swipe delete item
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
@@ -203,5 +215,8 @@ public class CategoryActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+         */
     }
 }

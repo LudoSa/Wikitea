@@ -10,14 +10,13 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class TeaRepository {
-    private TeaDao teaDao;
     private LiveData<List<Tea>> allTeasById;
     private int id;
 
 
 
-public TeaRepository(Application application)
-{
+public TeaRepository(Application application) {
+    /*
     TeaDatabase database = TeaDatabase.getInstance(application);
     teaDao = database.teaDao();
     allTeasById = teaDao.getAllTeasByCategory(id);
@@ -118,6 +117,7 @@ private static class InsertTeaAsyncTask extends AsyncTask<Tea, Void, Void>
         }
     }
 
+     */
 
-
+}
 }

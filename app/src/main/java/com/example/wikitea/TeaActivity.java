@@ -35,7 +35,7 @@ public class TeaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         //DARK/LIGHT THEME
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.DarkTheme);
         } else setTheme(R.style.AppTheme);
 
@@ -43,7 +43,7 @@ public class TeaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tea);
 
-
+        /*
 
         //toolbar
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
@@ -198,6 +198,8 @@ public class TeaActivity extends AppCompatActivity {
         }
     }
 
+         */
 
+    }
 }
 

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "395989231375-q9g80naj76mamnnrl75b0sresd40enjr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wikitea",
+            "certificate_hash": "aa9dd08e36700aff9bca0b56a0bc34137b34cf0a"
+          }
+        },
+        {
           "client_id": "395989231375-8j716ifv9viltrhbu3af482a2p3ftnsb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -21,9 +21,10 @@ public class TeaViewModel extends AndroidViewModel {
 
         repository = new TeaRepository(application);
 
-        allTeasById = repository.getAllTeasById(id);
+       // allTeasById = repository.getAllTeasById(id);
     }
 
+    /*
 
     public void insert(Tea tea)
     {
@@ -68,8 +69,10 @@ public class TeaViewModel extends AndroidViewModel {
             //return (T) new TeaViewModel(application, categoryId, repository);
             return (T) new TeaViewModel(application, categoryId);
         }
-    }
 
+
+    }
+*/
 }
 
 

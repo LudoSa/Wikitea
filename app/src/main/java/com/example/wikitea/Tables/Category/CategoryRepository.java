@@ -1,123 +1,114 @@
 package com.example.wikitea.Tables.Category;
 
 import android.app.Application;
-import android.os.AsyncTask;
-
 import androidx.lifecycle.LiveData;
-
+import com.example.wikitea.util.OnAsyncEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import java.util.List;
 
-public class CategoryRepository {
-    private LiveData<List<Category>> allCategories;
+public class CategoryRepository
+{
+    private static CategoryRepository instance;
 
 
+    public static CategoryRepository getInstance() {
+        if (instance == null)
+        {
+            synchronized (CategoryRepository.class)
+            {
+                if (instance == null)
+                {
+                    instance = new CategoryRepository();
+                }
+            }
+        }
+        return instance;
+    }
 
-    public CategoryRepository(Application application){
+    public LiveData<List<Category>> getByName(final String name) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(name)
+                .child("teas");
+        return new CategoryListLiveData(reference, name);
+    }
 
-        allCategories = categoryDao.getAllCategories();
+    public LiveData<Category> getCategory(final String idCategory) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("clients")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("accounts")
+                .child(idCategory);
+        return new CategoryLiveData(reference);
+    }
+
+    public LiveData<List<Category>> getAllCategories() {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("categories");
+        return new CategoryListLiveData(reference);
     }
 
 
-    public void insert(Category category){
 
-        new InsertCategoryAsyncTask(categoryDao).execute(category);
-
+    public void insert(final Category category, final OnAsyncEventListener callback) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(category.getName())
+                .child("teas");
+        String key = reference.push().getKey();
+        FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(category.getName())
+                .child("teas")
+                .child(key)
+                .setValue(category, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void update(Category category){
-
-        new UpdateCategoryAsyncTask(categoryDao).execute(category);
-
+    public void update(final Category category, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(category.getName())
+                .child("teas")
+                .child(category.getIdCategory())
+                .updateChildren(category.toMap(), (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void delete(Category category){
-
-        new DeleteCategoryAsyncTask(categoryDao).execute(category);
-
+    public void delete(final Category category, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(category.getName())
+                .child("teas")
+                .child(category.getIdCategory())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
     public void deleteAllCategories(){
 
-        new DeleteAllCategoryAsyncTask(categoryDao).execute();
+        //new DeleteAllCategoryAsyncTask(categoryDao).execute();
 
     }
-
-    public LiveData<List<Category>> getAllCategories(){
-
-        return allCategories;
-    }
-
-    private static class InsertCategoryAsyncTask extends AsyncTask<Category, Void, Void>{
-
-        private CategoryDao categoryDao;
-
-        private InsertCategoryAsyncTask(CategoryDao categoryDao){
-            this.categoryDao = categoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(Category... categories) {
-
-            categoryDao.insert(categories[0]);
-
-            return null;
-
-        }
-    }
-
-
-    private static class UpdateCategoryAsyncTask extends AsyncTask<Category, Void, Void>{
-
-        private CategoryDao categoryDao;
-
-        private UpdateCategoryAsyncTask(CategoryDao categoryDao){
-            this.categoryDao = categoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(Category... categories) {
-
-            categoryDao.update(categories[0]);
-
-            return null;
-
-        }
-    }
-
-    private static class DeleteCategoryAsyncTask extends AsyncTask<Category, Void, Void>{
-
-        private CategoryDao categoryDao;
-
-        private DeleteCategoryAsyncTask(CategoryDao categoryDao){
-            this.categoryDao = categoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(Category... categories) {
-
-            categoryDao.delete(categories[0]);
-
-            return null;
-
-        }
-    }
-
-    private static class DeleteAllCategoryAsyncTask extends AsyncTask<Void, Void, Void>{
-
-        private CategoryDao categoryDao;
-
-        private DeleteAllCategoryAsyncTask(CategoryDao categoryDao){
-            this.categoryDao = categoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            categoryDao.deleteAllCategories();
-
-            return null;
-
-        }
-    }
-
 }
