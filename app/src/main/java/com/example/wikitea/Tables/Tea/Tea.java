@@ -2,11 +2,6 @@ package com.example.wikitea.Tables.Tea;
 
 import android.icu.util.ULocale;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
-
 import com.example.wikitea.Tables.Category.Category;
 import com.google.firebase.database.Exclude;
 

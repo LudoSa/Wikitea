@@ -14,29 +14,30 @@ import com.example.wikitea.util.OnAsyncEventListener;
 
 import java.util.List;
 
-public class CategoryViewModel extends AndroidViewModel
+public class CategoryListViewModel extends AndroidViewModel
 {
     private CategoryRepository mRepository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<Category> mObservableCategory;
 
-    public CategoryViewModel(@NonNull Application application,
-                            final String idCategory, CategoryRepository categoryRepository) {
+    //private final MediatorLiveData<List<TeasFromCategory>> mObservableCategoryTeas;
+    private final MediatorLiveData<List<Category>> mObservableCategories;
+
+    public CategoryListViewModel(@NonNull Application application,
+                                 CategoryRepository categoryRepository) {
         super(application);
 
         mRepository = categoryRepository;
 
-        mObservableCategory = new MediatorLiveData<>();
+        mObservableCategories = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
-        mObservableCategory.setValue(null);
+        mObservableCategories.setValue(null);
 
-        if (idCategory != null) {
-            LiveData<Category> category = mRepository.getCategory(idCategory);
+            LiveData<List<Category>> category = mRepository.getAllCategories();
 
             // observe the changes of the category entity from the database and forward them
-            mObservableCategory.addSource(category, mObservableCategory::setValue);
-        }
+            mObservableCategories.addSource(category, mObservableCategories::setValue);
+
     }
 
     /**
@@ -47,28 +48,25 @@ public class CategoryViewModel extends AndroidViewModel
         @NonNull
         private final Application mApplication;
 
-        private final String mCategoryId;
-
         private final CategoryRepository mRepository;
 
-        public Factory(@NonNull Application application, String idCategory) {
+        public Factory(@NonNull Application application) {
             mApplication = application;
-            mCategoryId = idCategory;
             mRepository = ((BaseApp) application).getCategoryRepository();
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new CategoryViewModel(mApplication, mCategoryId, mRepository);
+            return (T) new CategoryListViewModel(mApplication, mRepository);
         }
     }
 
     /**
      * Expose the LiveData Category query so the UI can observe it.
      */
-    public LiveData<Category> getCategory() {
-        return mObservableCategory;
+    public LiveData<List<Category>> getCategories() {
+        return mObservableCategories;
     }
 
     public void createCategory(Category category, OnAsyncEventListener callback) {

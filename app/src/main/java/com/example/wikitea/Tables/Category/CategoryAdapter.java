@@ -54,6 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
 
+
     class CategoryHolder extends RecyclerView.ViewHolder {
 
         private TextView textViewName;
