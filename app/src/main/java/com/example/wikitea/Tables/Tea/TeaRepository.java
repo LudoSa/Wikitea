@@ -7,10 +7,14 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 
+import com.example.wikitea.util.OnAsyncEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 public class TeaRepository {
-    private TeaDao teaDao;
     private LiveData<List<Tea>> allTeasById;
     private int id;
 
@@ -18,106 +22,67 @@ public class TeaRepository {
 
 public TeaRepository(Application application)
 {
-    TeaDatabase database = TeaDatabase.getInstance(application);
-    teaDao = database.teaDao();
-    allTeasById = teaDao.getAllTeasByCategory(id);
+
 }
 
-    public LiveData<List<Tea>> getAllTeasById(int id)
+    public LiveData<List<Tea>> getAllTeasById(String id)
     {
-        return teaDao.getAllTeasByCategory(id);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("categories").child(id).child("teas");
+        return new TeasListLiveData(reference, id);
     }
 
-    public void insert(Tea tea)
-    {
-        new InsertTeaAsyncTask(teaDao).execute(tea);
+    public void insert(final Tea tea, final OnAsyncEventListener callback) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(tea.getIdTea())
+                .child("teas");
+
+        String key = reference.push().getKey();
+
+        FirebaseDatabase.getInstance()
+                .getReference("clients")
+                .child(tea.getIdTea())
+                .child("accounts")
+                .child(key)
+                .setValue(tea, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-public void update(Tea tea)
-{
-    new UpdateTeaAsyncTask(teaDao).execute(tea);
-}
-
-public void delete(Tea tea)
-{
-new DeleteTeaAsyncTask(teaDao).execute(tea);
-}
-
-public void deleteAllTeas()
-{
-new DeleteAllTeasAsyncTask(teaDao).execute();
-}
-
-private static class InsertTeaAsyncTask extends AsyncTask<Tea, Void, Void>
-{
-    private TeaDao teaDao;
-
-    private InsertTeaAsyncTask(TeaDao teaDao)
-    {
-        this.teaDao = teaDao;
-    }
-
-
-    @Override
-    protected Void doInBackground(Tea... teas) {
-        teaDao.insert(teas[0]);  //Begins with the first tea
-        return null;
-    }
-}
-
-    private static class UpdateTeaAsyncTask extends AsyncTask<Tea, Void, Void>
-    {
-        private TeaDao teaDao;
-
-        private UpdateTeaAsyncTask(TeaDao teaDao)
-        {
-            this.teaDao = teaDao;
-        }
-
-
-        @Override
-        protected Void doInBackground(Tea... teas) {
-            teaDao.update(teas[0]);  //Begins with the first tea
-            return null;
-        }
+    public void update(final Tea tea, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(tea.getIdCategoryTea())
+                .child("teas")
+                .child(tea.getIdTea())
+                .updateChildren(tea.toMap(), (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
 
-    private static class DeleteTeaAsyncTask extends AsyncTask<Tea, Void, Void>
-    {
-        private TeaDao teaDao;
-
-        private DeleteTeaAsyncTask(TeaDao teaDao)
-        {
-            this.teaDao = teaDao;
-        }
-
-
-        @Override
-        protected Void doInBackground(Tea... teas) {
-            teaDao.delete(teas[0]);  //Begins with the first tea
-            return null;
-        }
+    public void delete(final Tea tea, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .child(tea.getIdCategoryTea())
+                .child("teas")
+                .child(tea.getIdTea())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
-
-    private static class DeleteAllTeasAsyncTask extends AsyncTask<Void, Void, Void>
-    {
-        private TeaDao teaDao;
-
-        private DeleteAllTeasAsyncTask(TeaDao teaDao)
-        {
-
-            this.teaDao = teaDao;
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            teaDao.deleteAllTeas();
-            return null;
-        }
-    }
-
-
 
 }

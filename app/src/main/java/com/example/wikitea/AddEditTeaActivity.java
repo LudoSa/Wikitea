@@ -82,7 +82,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
 
         //Get the categoryId
         Bundle categoryIntent = getIntent().getExtras();
-        int categoryId = categoryIntent.getInt("EXTRA_CATEGORY_ID");
+        String categoryId = categoryIntent.getString("EXTRA_CATEGORY_ID");
 
         if(title.trim().isEmpty() || description.trim().isEmpty())
         {
@@ -96,8 +96,8 @@ public class AddEditTeaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_ORIGIN,origin);
         data.putExtra(EXTRA_IDCATEGORYTEA, categoryId);
 
-        int id = getIntent().getIntExtra(EXTRA_ID,-1);
-        if(id != -1)
+        String id = getIntent().getStringExtra(EXTRA_ID);
+        if(!id.equals("-1"))
         {
             data.putExtra(EXTRA_ID,id);
         }

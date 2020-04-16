@@ -13,15 +13,13 @@ import java.util.List;
 
 public class TeaViewModel extends AndroidViewModel {
     private TeaRepository repository;
-    private LiveData<List<Tea>> allTeasById;
     private Application application;
 
-    public TeaViewModel(@NonNull Application application, int id) {
+    public TeaViewModel(@NonNull Application application, String id) {
         super(application);
 
         repository = new TeaRepository(application);
 
-        allTeasById = repository.getAllTeasById(id);
     }
 
 
@@ -42,7 +40,7 @@ public class TeaViewModel extends AndroidViewModel {
         repository.deleteAllTeas();
     }
 
-    public LiveData<List<Tea>> getAllTeasByCategory(int id) {
+    public LiveData<List<Tea>> getAllTeasByCategory(String id) {
         return repository.getAllTeasById(id);
     };
 
@@ -54,10 +52,10 @@ public class TeaViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final int categoryId;
+        private final String categoryId;
 
 
-        public Factory(@NonNull Application application, int categoryId) {
+        public Factory(@NonNull Application application, String categoryId) {
             this.application = application;
             this.categoryId = categoryId;
         }

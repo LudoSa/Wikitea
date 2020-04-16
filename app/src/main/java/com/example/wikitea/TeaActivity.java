@@ -52,7 +52,7 @@ public class TeaActivity extends AppCompatActivity {
 
         //Get the categoryId
         Bundle categoryIntent = getIntent().getExtras();
-        final int categoryId = categoryIntent.getInt("EXTRA_CATEGORY_ID");
+        final String categoryId = categoryIntent.getString("EXTRA_CATEGORY_ID");
 
         FloatingActionButton buttonAddTea = (FloatingActionButton) findViewById(R.id.button_add_tea);
 
@@ -121,7 +121,7 @@ public class TeaActivity extends AppCompatActivity {
 
         //Get the categoryId
         Intent categoryIntent = getIntent();
-        int categoryId = categoryIntent.getIntExtra("EXTRA_CATEGORY_ID", 0);
+        String categoryId = categoryIntent.getStringExtra("EXTRA_CATEGORY_ID");
 
 
         //Get the values from AddEditTeaActivity
@@ -129,7 +129,7 @@ public class TeaActivity extends AppCompatActivity {
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
-            int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
+            String categoryTeaId = data.getStringExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA);
 
             //Create a new tea
             Tea tea = new Tea(title, description, origin, categoryTeaId);
@@ -140,9 +140,9 @@ public class TeaActivity extends AppCompatActivity {
         } else if (requestCode == EDIT_TEA_REQUEST && resultCode == RESULT_OK) {
 
             //Get the id from the tea we selected
-            int id = data.getIntExtra(AddEditTeaActivity.EXTRA_ID, -1);
+            String id = data.getStringExtra(AddEditTeaActivity.EXTRA_ID);
 
-            if (id == -1) {
+            if (id.equals("-1")) {
                 Toast.makeText(this, "Tea can't be updated", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -151,7 +151,7 @@ public class TeaActivity extends AppCompatActivity {
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
-            int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
+            //int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
 
             Tea tea = new Tea(title, description, origin, categoryId);
             tea.setIdTea(id);

@@ -8,11 +8,15 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.example.wikitea.Tables.Category.Category;
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Tea {
 
-    private int idTea;
+    private String idTea;
 
     private String title;
 
@@ -20,11 +24,11 @@ public class Tea {
 
     private String origin ;
 
-    private int idCategoryTea;
+    private String idCategoryTea;
 
 
 
-    public Tea(String title, String description, String origin, int idCategoryTea)
+    public Tea(String title, String description, String origin, String idCategoryTea)
     {
         this.title = title;
         this.description = description;
@@ -32,15 +36,15 @@ public class Tea {
         this.idCategoryTea = idCategoryTea;
     }
 
-    public void setIdCategoryTea(int idCategoryTea) { this.idCategoryTea = idCategoryTea; }
+    public void setIdCategoryTea(String idCategoryTea) { this.idCategoryTea = idCategoryTea; }
 
-    public void setIdTea(int idTea) {
+    public void setIdTea(String idTea) {
         this.idTea = idTea;
     }
 
 
     //GETTERS
-    public int getIdTea() {
+    public String getIdTea() {
         return idTea;
     }
 
@@ -56,8 +60,18 @@ public class Tea {
         return origin;
     }
 
-    public int getIdCategoryTea() {
+    public String getIdCategoryTea() {
         return idCategoryTea;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("title", title);
+        result.put("description", description);
+        result.put("origin", origin);
+
+        return result;
     }
 
 }
