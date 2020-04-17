@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,17 +13,25 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 public class TeaViewModel extends AndroidViewModel {
-    private TeaRepository repository;
-    private Application application;
+    private TeaRepository mRepository;
 
-    public TeaViewModel(@NonNull Application application, String id) {
+    private final MediatorLiveData<Tea> mObservableTea;
+
+
+
+
+    public TeaViewModel(@NonNull Application application, String id, TeaRepository teaRepository) {
         super(application);
 
-        repository = new TeaRepository(application);
+        mRepository = teaRepository;
+
+        mObservableTea = new MediatorLiveData<>();
+
+        mObservableTea.setValue(null);
 
     }
 
-
+/*
     public void insert(Tea tea)
     {
         repository.insert(tea);
@@ -35,7 +44,7 @@ public class TeaViewModel extends AndroidViewModel {
     {
         repository.delete(tea);
     }
-
+/*
     public void deleteAllTeas(){
         repository.deleteAllTeas();
     }
@@ -44,7 +53,7 @@ public class TeaViewModel extends AndroidViewModel {
         return repository.getAllTeasById(id);
     };
 
-
+*//*
 
     //Factory for custom viewmodel constructor
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
@@ -66,7 +75,7 @@ public class TeaViewModel extends AndroidViewModel {
             //return (T) new TeaViewModel(application, categoryId, repository);
             return (T) new TeaViewModel(application, categoryId);
         }
-    }
+    }*/
 
 }
 

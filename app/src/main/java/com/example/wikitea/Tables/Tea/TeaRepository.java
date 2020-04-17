@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 
+import com.example.wikitea.Tables.Category.CategoryRepository;
 import com.example.wikitea.util.OnAsyncEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -15,19 +16,30 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class TeaRepository {
-    private LiveData<List<Tea>> allTeasById;
-    private int id;
 
 
 
-public TeaRepository(Application application)
-{
+    private static TeaRepository instance;
 
-}
+
+    public static TeaRepository getInstance() {
+        if (instance == null)
+        {
+            synchronized (TeaRepository.class)
+            {
+                if (instance == null)
+                {
+                    instance = new TeaRepository();
+                }
+            }
+        }
+        return instance;
+    }
+
 
     public LiveData<List<Tea>> getAllTeasById(String id)
     {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("categories").child(id).child("teas");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("teas").child(id);
         return new TeasListLiveData(reference, id);
     }
 

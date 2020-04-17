@@ -22,9 +22,13 @@ public class Tea {
     private String idCategoryTea;
 
 
+    public Tea(){
 
-    public Tea(String title, String description, String origin, String idCategoryTea)
+    }
+
+    public Tea(String idTea, String title, String description, String origin, String idCategoryTea)
     {
+        this.idTea = idTea;
         this.title = title;
         this.description = description;
         this.origin = origin;

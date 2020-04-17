@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.wikitea.Tables.Tea.Tea;
 import com.example.wikitea.Tables.Tea.TeaAdapter;
+import com.example.wikitea.Tables.Tea.TeaListViewModel;
 import com.example.wikitea.Tables.Tea.TeaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,7 +29,7 @@ public class TeaActivity extends AppCompatActivity {
     public static final int ADD_TEA_REQUEST = 1;
     public static final int EDIT_TEA_REQUEST = 2;
 
-    private TeaViewModel teaViewModel;
+    private TeaListViewModel viewModel;
     private List<Tea> teas;
 
     @Override
@@ -43,7 +44,7 @@ public class TeaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tea);
 
-        /*
+
 
         //toolbar
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
@@ -73,16 +74,19 @@ public class TeaActivity extends AppCompatActivity {
         final TeaAdapter adapter = new TeaAdapter();
         recyclerView.setAdapter(adapter);
 
+        TeaListViewModel.Factory factory = new TeaListViewModel.Factory(getApplication(), categoryId);
+
         //Set the list
-        teas = new ArrayList<>();
-        TeaViewModel.Factory factory = new TeaViewModel.Factory(getApplication(), categoryId);
-        teaViewModel = ViewModelProviders.of(this, factory).get(TeaViewModel.class);
-        teaViewModel.getAllTeasByCategory(categoryId).observe(this, (List<Tea> teaList) ->{
-            if (teaList != null) {
-                teas = teaList;
+
+        viewModel = ViewModelProviders.of(this, factory).get(TeaListViewModel.class);
+        viewModel.getTeasById().observe(this, teas_firebases ->{
+            if (teas_firebases != null) {
+                teas = (List<Tea>) teas_firebases;
                 adapter.setTeas(teas);
             }
         });
+
+        /*
 
         //Swipe for delete a tea
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,

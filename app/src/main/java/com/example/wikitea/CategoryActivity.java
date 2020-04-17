@@ -130,7 +130,7 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-
+*/
         //Simple click, we take the id to get the list of teas
         adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
             @Override
@@ -141,7 +141,7 @@ public class CategoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+/*
     }
 
 
@@ -215,8 +215,8 @@ public class CategoryActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
-         */
+
     }
 }
