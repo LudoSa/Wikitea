@@ -78,4 +78,9 @@ public class CategoryListViewModel extends AndroidViewModel
         ((BaseApp) getApplication()).getCategoryRepository()
                 .update(category, callback);
     }
+
+    public void deleteCategory(Category category, OnAsyncEventListener callback) {
+        ((BaseApp) getApplication()).getCategoryRepository()
+                .delete(category, callback);
+    }
 }

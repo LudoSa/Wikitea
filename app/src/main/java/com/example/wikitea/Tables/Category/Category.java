@@ -1,13 +1,9 @@
 package com.example.wikitea.Tables.Category;
 
-
 import androidx.annotation.NonNull;
-
 import com.google.firebase.database.Exclude;
-
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class Category implements Comparable{
     private String idCategory;
@@ -59,7 +55,6 @@ public class Category implements Comparable{
     }
 
 
-    //Useless ?
     @Override
     public String toString() {
         return name + " " + virtues;
@@ -78,7 +73,4 @@ public class Category implements Comparable{
 
         return result;
     }
-
-
-
 }
