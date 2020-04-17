@@ -3,6 +3,7 @@ package com.example.wikitea;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.example.wikitea.Tables.Category.CategoryAdapter;
 import com.example.wikitea.Tables.Category.CategoryListLiveData;
 import com.example.wikitea.Tables.Category.CategoryListViewModel;
 import com.example.wikitea.Tables.Category.CategoryViewModel;
+import com.example.wikitea.util.OnAsyncEventListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -34,10 +36,13 @@ import java.util.List;
 //Class for category's activity
 public class CategoryActivity extends AppCompatActivity {
 
+    private static final String TAG = "CategoryActivity";
+
+
+
     public static final int ADD_CATEGORY_REQUEST = 1;
     public static final int EDIT_CATEGORY_REQUEST = 2;
 
-    private CategoryViewModel categoryViewModel;
     private CategoryListViewModel viewModelList;
     private List<Category> categories;
 
@@ -97,7 +102,9 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
 
-        /*
+
+
+
 
 
         //Swipe delete item
@@ -112,16 +119,37 @@ public class CategoryActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 //Delete the Category we selected (with the position)
-                categoryViewModel.delete(adapter.getCategoryAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(CategoryActivity.this, "Category deleted", Toast.LENGTH_LONG).show();
+
+                //    viewModelList.deleteCategory(adapter.getCategoryAt(viewHolder.getAdapterPosition()));
+
+                viewModelList.deleteCategory(adapter.getCategoryAt(viewHolder.getAdapterPosition()), new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "deleteCategory: success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "deleteCategory: failure", e);
+                    }
+                });
+
+
+
+            //    Toast.makeText(CategoryActivity.this, "Category deleted", Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(recyclerView);
 
 
+
+
+
         //Set long click action on an item in the recyclerview
+        //To update the category
         adapter.setOnItemLongClickListener(new CategoryAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(Category category) {
+                Log.d(TAG, "clicked on: " + category.getName());
                 Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
                 intent.putExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, category.getIdCategory());
                 intent.putExtra(AddEditCategoryActivity.EXTRA_NAME, category.getName());
@@ -130,7 +158,10 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-*/
+
+        /********
+
+
         //Simple click, we take the id to get the list of teas
         adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
             @Override
@@ -141,7 +172,9 @@ public class CategoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
+
+         */
+
     }
 
 
@@ -158,20 +191,25 @@ public class CategoryActivity extends AppCompatActivity {
 
             //Create a new Category with the 2 values and insert it
             Category category = new Category(name, virtue);
-            categoryViewModel.insert(category);
+            viewModelList.createCategory(category, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    Log.d(TAG, "createCategory: success");
+                }
 
-            Toast.makeText(this, "category saved", Toast.LENGTH_LONG).show();
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "createCategory: failure", e);
+                }
+            });
+
+        //    Toast.makeText(this, "category saved", Toast.LENGTH_LONG).show();
 
 
         } else  if (requestCode == EDIT_CATEGORY_REQUEST && resultCode == RESULT_OK){
 
             //Get the id from the category we want to modify.
-            int id = data.getIntExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, -1);
-
-            if (id == -1){
-                Toast.makeText(this, "Category can't be updated", Toast.LENGTH_LONG).show();
-                return;
-            }
+            String id = data.getStringExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY);
 
             //Get the name and virtue of the category selected
             String name = data.getStringExtra(AddEditCategoryActivity.EXTRA_NAME);
@@ -180,9 +218,17 @@ public class CategoryActivity extends AppCompatActivity {
             //Create a new Category with the 2 values and update it (in fact, overwrite it)
             Category category = new Category(name, virtue);
             category.setIdCategory(id);
-            categoryViewModel.update(category);
+            viewModelList.updateCategory(category, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    Log.d(TAG, "updateCategory: success");
+                }
 
-            Toast.makeText(this, "Category updated", Toast.LENGTH_LONG).show();
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "updateCategory: failure", e);
+                }
+            });
 
         }else {
             Toast.makeText(this, "category not saved", Toast.LENGTH_LONG).show();
@@ -208,15 +254,12 @@ public class CategoryActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_delete_all_categories:
-                categoryViewModel.deleteAllCategories();
+             //   categoryViewModel.deleteAllCategories();
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }*/
-
-
     }
 }
