@@ -18,7 +18,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
     public static final String EXTRA_NAME = "com.example.wikitea.EXTRA_NAME";
     public static final String EXTRA_VIRTUES = "com.example.wikitea.EXTRA_VIRTUES";
 
-
+    private EditText editTextId;
     private EditText editTextName;
     private EditText editTextVirtues;
 

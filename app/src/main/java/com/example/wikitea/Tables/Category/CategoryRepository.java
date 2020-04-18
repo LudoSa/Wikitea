@@ -41,9 +41,9 @@ public class CategoryRepository
 
     public LiveData<Category> getCategory(final String idCategory) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("clients")
+                .getReference("categories")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("accounts")
+                .child("teas")
                 .child(idCategory);
         return new CategoryLiveData(reference);
     }
@@ -59,10 +59,9 @@ public class CategoryRepository
     public void insert(final Category category, final OnAsyncEventListener callback) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("categories")
-                .child(category.getName());
-
+                .child(category.getName())
+                .child("teas");
         String key = reference.push().getKey();
-
         FirebaseDatabase.getInstance()
                 .getReference("categories")
                 .child(category.getName())
@@ -78,8 +77,6 @@ public class CategoryRepository
     public void update(final Category category, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
                 .getReference("categories")
-                .child(category.getName())
-                .child("teas")
                 .child(category.getIdCategory())
                 .updateChildren(category.toMap(), (databaseError, databaseReference) -> {
                     if (databaseError != null) {
@@ -93,8 +90,6 @@ public class CategoryRepository
     public void delete(final Category category, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance()
                 .getReference("categories")
-                .child(category.getName())
-                .child("teas")
                 .child(category.getIdCategory())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {
