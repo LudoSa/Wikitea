@@ -37,7 +37,6 @@ public class CategoryListViewModel extends AndroidViewModel
 
             // observe the changes of the category entity from the database and forward them
             mObservableCategories.addSource(category, mObservableCategories::setValue);
-
     }
 
     /**

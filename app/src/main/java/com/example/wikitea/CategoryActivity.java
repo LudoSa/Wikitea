@@ -38,8 +38,6 @@ public class CategoryActivity extends AppCompatActivity {
 
     private static final String TAG = "CategoryActivity";
 
-
-
     public static final int ADD_CATEGORY_REQUEST = 1;
     public static final int EDIT_CATEGORY_REQUEST = 2;
 
@@ -133,10 +131,6 @@ public class CategoryActivity extends AppCompatActivity {
                         Log.d(TAG, "deleteCategory: failure", e);
                     }
                 });
-
-
-
-            //    Toast.makeText(CategoryActivity.this, "Category deleted", Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -149,7 +143,6 @@ public class CategoryActivity extends AppCompatActivity {
         adapter.setOnItemLongClickListener(new CategoryAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(Category category) {
-                Log.d(TAG, "clicked on: " + category.getName());
                 Intent intent = new Intent(CategoryActivity.this, AddEditCategoryActivity.class);
                 intent.putExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY, category.getIdCategory());
                 intent.putExtra(AddEditCategoryActivity.EXTRA_NAME, category.getName());
