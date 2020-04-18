@@ -22,7 +22,6 @@ public class AddEditTeaActivity extends AppCompatActivity {
     public static final String EXTRA_DESCRIPTION = "com.example.wikitea.EXTRA_DESCRIPTION";
     public static final String EXTRA_ORIGIN = "com.example.wikitea.EXTRA_ORIGIN";
     public static final String EXTRA_IDCATEGORYTEA = "com.example.wikitea.EXTRA_IDCATEGORY";
-    public static final String EXTRA_FAVORITE = "com.example.wikitea.EXTRA_FAVORITE";
 
     private EditText editTextTitle;
     private EditText editTextDescription;
@@ -84,6 +83,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
         Bundle categoryIntent = getIntent().getExtras();
         String categoryId = categoryIntent.getString("EXTRA_CATEGORY_ID");
 
+
         if(title.trim().isEmpty() || description.trim().isEmpty())
         {
             Toast.makeText(this,"Please insert a title and a description",Toast.LENGTH_SHORT).show();
@@ -96,8 +96,8 @@ public class AddEditTeaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_ORIGIN,origin);
         data.putExtra(EXTRA_IDCATEGORYTEA, categoryId);
 
-        String id = getIntent().getStringExtra(EXTRA_ID);
-        if(!id.equals("-1"))
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if(id != -1)
         {
             data.putExtra(EXTRA_ID,id);
         }

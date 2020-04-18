@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class Tea {
 
+    @Exclude
     private String idTea;
 
     private String title;
@@ -26,14 +27,14 @@ public class Tea {
 
     }
 
-    public Tea(String idTea, String title, String description, String origin, String idCategoryTea)
+    public Tea(String title, String description, String origin, String idCategoryTea)
     {
-        this.idTea = idTea;
         this.title = title;
         this.description = description;
         this.origin = origin;
         this.idCategoryTea = idCategoryTea;
     }
+
 
     public void setIdCategoryTea(String idCategoryTea) { this.idCategoryTea = idCategoryTea; }
 
@@ -41,6 +42,7 @@ public class Tea {
         this.idTea = idTea;
     }
 
+    public void setTitle(String title)  {this.title = title; }
 
     //GETTERS
     public String getIdTea() {
@@ -69,6 +71,7 @@ public class Tea {
         result.put("title", title);
         result.put("description", description);
         result.put("origin", origin);
+        result.put("idCategoryTea", idCategoryTea);
 
         return result;
     }

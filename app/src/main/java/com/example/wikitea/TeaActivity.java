@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.example.wikitea.Tables.Tea.Tea;
 import com.example.wikitea.Tables.Tea.TeaAdapter;
 import com.example.wikitea.Tables.Tea.TeaListViewModel;
 import com.example.wikitea.Tables.Tea.TeaViewModel;
+import com.example.wikitea.util.OnAsyncEventListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ import java.util.List;
 public class TeaActivity extends AppCompatActivity {
     public static final int ADD_TEA_REQUEST = 1;
     public static final int EDIT_TEA_REQUEST = 2;
+
+    private static final String TAG = "TeaActivity";
 
     private TeaListViewModel viewModel;
     private List<Tea> teas;
@@ -86,7 +90,7 @@ public class TeaActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
 
         //Swipe for delete a tea
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
@@ -98,7 +102,17 @@ public class TeaActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                teaViewModel.delete(adapter.getTeaAt(viewHolder.getAdapterPosition()));
+                viewModel.deleteTea(adapter.getTeaAt(viewHolder.getAdapterPosition()), new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "deleteTea: success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "deleteTea: failure");
+                    }
+                });
                 Toast.makeText(TeaActivity.this, "Tea deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
@@ -113,7 +127,7 @@ public class TeaActivity extends AppCompatActivity {
                 intent.putExtra(AddEditTeaActivity.EXTRA_TITLE, tea.getTitle());
                 intent.putExtra(AddEditTeaActivity.EXTRA_DESCRIPTION, tea.getDescription());
                 intent.putExtra(AddEditTeaActivity.EXTRA_ORIGIN, tea.getOrigin());
-                intent.putExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, tea.getIdCategoryTea());
+                intent.putExtra("EXTRA_CATEGORY_ID", tea.getIdCategoryTea());
                 startActivityForResult(intent, EDIT_TEA_REQUEST);
             }
         });
@@ -137,7 +151,17 @@ public class TeaActivity extends AppCompatActivity {
 
             //Create a new tea
             Tea tea = new Tea(title, description, origin, categoryTeaId);
-            teaViewModel.insert(tea);
+            viewModel.createTea(tea, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    Log.d(TAG, "createTea: success");
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "createTea: failure", e);
+                }
+            });
             Toast.makeText(this, "Tea saved", Toast.LENGTH_SHORT).show();
 
             //Edit a tea
@@ -146,22 +170,27 @@ public class TeaActivity extends AppCompatActivity {
             //Get the id from the tea we selected
             String id = data.getStringExtra(AddEditTeaActivity.EXTRA_ID);
 
-            if (id.equals("-1")) {
-                Toast.makeText(this, "Tea can't be updated", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             //receive information from AddEditTeaActivity
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
-            //int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
+            //String categoryTeaId = data.getStringExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA);
 
             Tea tea = new Tea(title, description, origin, categoryId);
-            tea.setIdTea(id);
+            tea.setTitle(title);
 
             //Update with the new tea
-            teaViewModel.update(tea);
+            viewModel.updateTea(tea, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    Log.d(TAG, "updateTea: success");
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "updateTea: failure", e);
+                }
+            });
 
             Toast.makeText(this, "Tea updated", Toast.LENGTH_SHORT).show();
         } else {
@@ -190,20 +219,17 @@ public class TeaActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).addToBackStack(null).commit();
 
                 return true;
-
+/*
             case R.id.action_delete_all_teas:
                 teaViewModel.deleteAllTeas();
                 Toast.makeText(this, "All teas deleted", Toast.LENGTH_LONG).show();
                 return true;
-
+*/
             default:
 
                 return super.onOptionsItemSelected(item);
         }
     }
 
-         */
-
-    }
 }
 

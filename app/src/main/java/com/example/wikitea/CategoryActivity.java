@@ -159,7 +159,7 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
 
-        /********
+
 
 
         //Simple click, we take the id to get the list of teas
@@ -173,7 +173,7 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-         */
+
 
     }
 
