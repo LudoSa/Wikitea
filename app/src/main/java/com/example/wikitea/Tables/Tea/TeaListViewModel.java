@@ -90,9 +90,9 @@ public class TeaListViewModel extends AndroidViewModel {
                 .delete(tea, callback);
     }
 
-    public void deleteAllTeas(Tea tea, OnAsyncEventListener callback){
+    public void deleteAllTeas(String idCategoryTea, OnAsyncEventListener callback){
         ((BaseApp) getApplication()).getTeaRepository()
-                .deleteAllTeas(tea, callback);
+                .deleteAllTeas(idCategoryTea, callback);
     }
 
 }

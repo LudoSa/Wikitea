@@ -43,11 +43,11 @@ public class TeaRepository {
         return new TeasListLiveData(reference, id);
     }
 
-    public void deleteAllTeas(final Tea tea, OnAsyncEventListener callback)
+    public void deleteAllTeas(final String idCategoryTea, OnAsyncEventListener callback)
     {
         FirebaseDatabase.getInstance()
                 .getReference("categories")
-                .child(tea.getIdCategoryTea())
+                .child(idCategoryTea)
                 .child("teas")
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {
@@ -61,11 +61,6 @@ public class TeaRepository {
 
     public void insert(final Tea tea, final OnAsyncEventListener callback) {
 
-       /* DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("teas")
-                .child(tea.getIdTea());
-
-        String key = reference.push().getKey();*/
 
         FirebaseDatabase.getInstance()
                 .getReference("categories")

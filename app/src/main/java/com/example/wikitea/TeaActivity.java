@@ -36,6 +36,8 @@ public class TeaActivity extends AppCompatActivity {
     private TeaListViewModel viewModel;
     private List<Tea> teas;
 
+    private String categoryId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,7 +59,7 @@ public class TeaActivity extends AppCompatActivity {
 
         //Get the categoryId
         Bundle categoryIntent = getIntent().getExtras();
-        final String categoryId = categoryIntent.getString("EXTRA_CATEGORY_ID");
+        categoryId = categoryIntent.getString("EXTRA_CATEGORY_ID");
 
         FloatingActionButton buttonAddTea = (FloatingActionButton) findViewById(R.id.button_add_tea);
 
@@ -177,6 +179,7 @@ public class TeaActivity extends AppCompatActivity {
             //String categoryTeaId = data.getStringExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA);
 
             Tea tea = new Tea(title, description, origin, categoryId);
+            tea.setIdTea(id);
             tea.setTitle(title);
 
             //Update with the new tea
@@ -219,12 +222,22 @@ public class TeaActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).addToBackStack(null).commit();
 
                 return true;
-/*
+
             case R.id.action_delete_all_teas:
-                teaViewModel.deleteAllTeas();
+                viewModel.deleteAllTeas(categoryId, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "deleteAllTeas: success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "deleteAllTeas: failure");
+                    }
+                });
                 Toast.makeText(this, "All teas deleted", Toast.LENGTH_LONG).show();
                 return true;
-*/
+
             default:
 
                 return super.onOptionsItemSelected(item);
