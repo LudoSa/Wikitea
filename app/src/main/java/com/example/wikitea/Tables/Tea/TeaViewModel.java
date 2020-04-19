@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,20 +13,25 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 public class TeaViewModel extends AndroidViewModel {
-    private TeaRepository repository;
-    private LiveData<List<Tea>> allTeasById;
-    private Application application;
+    private TeaRepository mRepository;
 
-    public TeaViewModel(@NonNull Application application, int id) {
+    private final MediatorLiveData<Tea> mObservableTea;
+
+
+
+
+    public TeaViewModel(@NonNull Application application, String id, TeaRepository teaRepository) {
         super(application);
 
-        repository = new TeaRepository(application);
+        mRepository = teaRepository;
 
-       // allTeasById = repository.getAllTeasById(id);
+        mObservableTea = new MediatorLiveData<>();
+
+        mObservableTea.setValue(null);
+
     }
 
-    /*
-
+/*
     public void insert(Tea tea)
     {
         repository.insert(tea);
@@ -38,16 +44,16 @@ public class TeaViewModel extends AndroidViewModel {
     {
         repository.delete(tea);
     }
-
+/*
     public void deleteAllTeas(){
         repository.deleteAllTeas();
     }
 
-    public LiveData<List<Tea>> getAllTeasByCategory(int id) {
+    public LiveData<List<Tea>> getAllTeasByCategory(String id) {
         return repository.getAllTeasById(id);
     };
 
-
+*//*
 
     //Factory for custom viewmodel constructor
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
@@ -55,10 +61,10 @@ public class TeaViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final int categoryId;
+        private final String categoryId;
 
 
-        public Factory(@NonNull Application application, int categoryId) {
+        public Factory(@NonNull Application application, String categoryId) {
             this.application = application;
             this.categoryId = categoryId;
         }
@@ -69,10 +75,8 @@ public class TeaViewModel extends AndroidViewModel {
             //return (T) new TeaViewModel(application, categoryId, repository);
             return (T) new TeaViewModel(application, categoryId);
         }
+    }*/
 
-
-    }
-*/
 }
 
 

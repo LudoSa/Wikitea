@@ -59,9 +59,8 @@ public class CategoryRepository
     public void insert(final Category category, final OnAsyncEventListener callback) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("categories")
-                .child(category.getName());
-
-
+                .child(category.getName())
+                .child("teas");
         String key = reference.push().getKey();
         FirebaseDatabase.getInstance()
                 .getReference("categories")

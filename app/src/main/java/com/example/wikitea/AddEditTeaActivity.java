@@ -22,7 +22,6 @@ public class AddEditTeaActivity extends AppCompatActivity {
     public static final String EXTRA_DESCRIPTION = "com.example.wikitea.EXTRA_DESCRIPTION";
     public static final String EXTRA_ORIGIN = "com.example.wikitea.EXTRA_ORIGIN";
     public static final String EXTRA_IDCATEGORYTEA = "com.example.wikitea.EXTRA_IDCATEGORY";
-    public static final String EXTRA_FAVORITE = "com.example.wikitea.EXTRA_FAVORITE";
 
     private EditText editTextTitle;
     private EditText editTextDescription;
@@ -82,7 +81,8 @@ public class AddEditTeaActivity extends AppCompatActivity {
 
         //Get the categoryId
         Bundle categoryIntent = getIntent().getExtras();
-        int categoryId = categoryIntent.getInt("EXTRA_CATEGORY_ID");
+        String categoryId = categoryIntent.getString("EXTRA_CATEGORY_ID");
+
 
         if(title.trim().isEmpty() || description.trim().isEmpty())
         {
@@ -96,7 +96,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_ORIGIN,origin);
         data.putExtra(EXTRA_IDCATEGORYTEA, categoryId);
 
-        int id = getIntent().getIntExtra(EXTRA_ID,-1);
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
         if(id != -1)
         {
             data.putExtra(EXTRA_ID,id);

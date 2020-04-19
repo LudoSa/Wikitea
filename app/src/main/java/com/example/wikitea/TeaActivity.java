@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +18,9 @@ import android.widget.Toast;
 
 import com.example.wikitea.Tables.Tea.Tea;
 import com.example.wikitea.Tables.Tea.TeaAdapter;
+import com.example.wikitea.Tables.Tea.TeaListViewModel;
 import com.example.wikitea.Tables.Tea.TeaViewModel;
+import com.example.wikitea.util.OnAsyncEventListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -28,8 +31,12 @@ public class TeaActivity extends AppCompatActivity {
     public static final int ADD_TEA_REQUEST = 1;
     public static final int EDIT_TEA_REQUEST = 2;
 
-    private TeaViewModel teaViewModel;
+    private static final String TAG = "TeaActivity";
+
+    private TeaListViewModel viewModel;
     private List<Tea> teas;
+
+    private String categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,7 @@ public class TeaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tea);
 
-        /*
+
 
         //toolbar
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
@@ -52,7 +59,7 @@ public class TeaActivity extends AppCompatActivity {
 
         //Get the categoryId
         Bundle categoryIntent = getIntent().getExtras();
-        final int categoryId = categoryIntent.getInt("EXTRA_CATEGORY_ID");
+        categoryId = categoryIntent.getString("EXTRA_CATEGORY_ID");
 
         FloatingActionButton buttonAddTea = (FloatingActionButton) findViewById(R.id.button_add_tea);
 
@@ -73,16 +80,19 @@ public class TeaActivity extends AppCompatActivity {
         final TeaAdapter adapter = new TeaAdapter();
         recyclerView.setAdapter(adapter);
 
+        TeaListViewModel.Factory factory = new TeaListViewModel.Factory(getApplication(), categoryId);
+
         //Set the list
-        teas = new ArrayList<>();
-        TeaViewModel.Factory factory = new TeaViewModel.Factory(getApplication(), categoryId);
-        teaViewModel = ViewModelProviders.of(this, factory).get(TeaViewModel.class);
-        teaViewModel.getAllTeasByCategory(categoryId).observe(this, (List<Tea> teaList) ->{
-            if (teaList != null) {
-                teas = teaList;
+
+        viewModel = ViewModelProviders.of(this, factory).get(TeaListViewModel.class);
+        viewModel.getTeasById().observe(this, teas_firebases ->{
+            if (teas_firebases != null) {
+                teas = (List<Tea>) teas_firebases;
                 adapter.setTeas(teas);
             }
         });
+
+
 
         //Swipe for delete a tea
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
@@ -94,7 +104,17 @@ public class TeaActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                teaViewModel.delete(adapter.getTeaAt(viewHolder.getAdapterPosition()));
+                viewModel.deleteTea(adapter.getTeaAt(viewHolder.getAdapterPosition()), new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "deleteTea: success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "deleteTea: failure");
+                    }
+                });
                 Toast.makeText(TeaActivity.this, "Tea deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
@@ -109,7 +129,7 @@ public class TeaActivity extends AppCompatActivity {
                 intent.putExtra(AddEditTeaActivity.EXTRA_TITLE, tea.getTitle());
                 intent.putExtra(AddEditTeaActivity.EXTRA_DESCRIPTION, tea.getDescription());
                 intent.putExtra(AddEditTeaActivity.EXTRA_ORIGIN, tea.getOrigin());
-                intent.putExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, tea.getIdCategoryTea());
+                intent.putExtra("EXTRA_CATEGORY_ID", tea.getIdCategoryTea());
                 startActivityForResult(intent, EDIT_TEA_REQUEST);
             }
         });
@@ -121,7 +141,7 @@ public class TeaActivity extends AppCompatActivity {
 
         //Get the categoryId
         Intent categoryIntent = getIntent();
-        int categoryId = categoryIntent.getIntExtra("EXTRA_CATEGORY_ID", 0);
+        String categoryId = categoryIntent.getStringExtra("EXTRA_CATEGORY_ID");
 
 
         //Get the values from AddEditTeaActivity
@@ -129,35 +149,51 @@ public class TeaActivity extends AppCompatActivity {
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
-            int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
+            String categoryTeaId = data.getStringExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA);
 
             //Create a new tea
             Tea tea = new Tea(title, description, origin, categoryTeaId);
-            teaViewModel.insert(tea);
+            viewModel.createTea(tea, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    Log.d(TAG, "createTea: success");
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "createTea: failure", e);
+                }
+            });
             Toast.makeText(this, "Tea saved", Toast.LENGTH_SHORT).show();
 
             //Edit a tea
         } else if (requestCode == EDIT_TEA_REQUEST && resultCode == RESULT_OK) {
 
             //Get the id from the tea we selected
-            int id = data.getIntExtra(AddEditTeaActivity.EXTRA_ID, -1);
-
-            if (id == -1) {
-                Toast.makeText(this, "Tea can't be updated", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            String id = data.getStringExtra(AddEditTeaActivity.EXTRA_ID);
 
             //receive information from AddEditTeaActivity
             String title = data.getStringExtra(AddEditTeaActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTeaActivity.EXTRA_DESCRIPTION);
             String origin = data.getStringExtra(AddEditTeaActivity.EXTRA_ORIGIN);
-            int categoryTeaId = data.getIntExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA, 1);
+            //String categoryTeaId = data.getStringExtra(AddEditTeaActivity.EXTRA_IDCATEGORYTEA);
 
             Tea tea = new Tea(title, description, origin, categoryId);
             tea.setIdTea(id);
+            tea.setTitle(title);
 
             //Update with the new tea
-            teaViewModel.update(tea);
+            viewModel.updateTea(tea, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    Log.d(TAG, "updateTea: success");
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "updateTea: failure", e);
+                }
+            });
 
             Toast.makeText(this, "Tea updated", Toast.LENGTH_SHORT).show();
         } else {
@@ -188,7 +224,17 @@ public class TeaActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_delete_all_teas:
-                teaViewModel.deleteAllTeas();
+                viewModel.deleteAllTeas(categoryId, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "deleteAllTeas: success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "deleteAllTeas: failure");
+                    }
+                });
                 Toast.makeText(this, "All teas deleted", Toast.LENGTH_LONG).show();
                 return true;
 
@@ -198,8 +244,5 @@ public class TeaActivity extends AppCompatActivity {
         }
     }
 
-         */
-
-    }
 }
 
