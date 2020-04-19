@@ -204,6 +204,7 @@ public class CategoryActivity extends AppCompatActivity {
             //Get the id from the category we want to modify.
             String id = data.getStringExtra(AddEditCategoryActivity.EXTRA_IDCATEGORY);
 
+
             //Get the name and virtue of the category selected
             String name = data.getStringExtra(AddEditCategoryActivity.EXTRA_NAME);
             String virtue = data.getStringExtra(AddEditCategoryActivity.EXTRA_VIRTUES);
@@ -211,6 +212,7 @@ public class CategoryActivity extends AppCompatActivity {
             //Create a new Category with the 2 values and update it (in fact, overwrite it)
             Category category = new Category(name, virtue);
             category.setIdCategory(id);
+            category.setName(name);
             viewModelList.updateCategory(category, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {

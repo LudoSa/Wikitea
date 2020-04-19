@@ -47,7 +47,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
         if (intent.hasExtra(EXTRA_IDCATEGORY)){
             setTitle("Edit Category");
-            editTextName.setText(intent.getStringExtra(EXTRA_NAME));
+            editTextName.setText(intent.getStringExtra(EXTRA_IDCATEGORY));
             editTextVirtues.setText(intent.getStringExtra(EXTRA_VIRTUES));
         }else{
             setTitle("Add Category");
@@ -69,8 +69,8 @@ public class AddEditCategoryActivity extends AppCompatActivity {
         data.putExtra(EXTRA_NAME,name);
         data.putExtra(EXTRA_VIRTUES,virtue);
 
-        int id = getIntent().getIntExtra(EXTRA_IDCATEGORY,-1);
-        if(id != -1)
+        String id = getIntent().getStringExtra(EXTRA_IDCATEGORY);
+        if(id != null)
         {
             data.putExtra(EXTRA_IDCATEGORY,id);
         }
