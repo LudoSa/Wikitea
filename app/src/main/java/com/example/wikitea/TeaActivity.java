@@ -2,11 +2,14 @@ package com.example.wikitea;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,11 +22,9 @@ import android.widget.Toast;
 import com.example.wikitea.Tables.Tea.Tea;
 import com.example.wikitea.Tables.Tea.TeaAdapter;
 import com.example.wikitea.Tables.Tea.TeaListViewModel;
-import com.example.wikitea.Tables.Tea.TeaViewModel;
 import com.example.wikitea.util.OnAsyncEventListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //Class for tea's activity
@@ -35,7 +36,6 @@ public class TeaActivity extends AppCompatActivity {
 
     private TeaListViewModel viewModel;
     private List<Tea> teas;
-
     private String categoryId;
 
     @Override
@@ -94,7 +94,7 @@ public class TeaActivity extends AppCompatActivity {
 
 
 
-        //Swipe for delete a tea
+        //Swipe right to left to delete a category
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -205,7 +205,7 @@ public class TeaActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.details_menu, menu);
+        menuInflater.inflate(R.menu.tea_menu, menu);
         return true;
     }
 
@@ -220,7 +220,6 @@ public class TeaActivity extends AppCompatActivity {
 
                 //OPEN FRAGMENT SETTING
                 getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).addToBackStack(null).commit();
-
                 return true;
 
             case R.id.action_delete_all_teas:
@@ -238,11 +237,13 @@ public class TeaActivity extends AppCompatActivity {
                 Toast.makeText(this, "All teas deleted", Toast.LENGTH_LONG).show();
                 return true;
 
-            default:
+            case R.id.action_logout:
+                startActivity(new Intent(TeaActivity.this,LoginActivity.class));
+                return true;
 
+            default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
 

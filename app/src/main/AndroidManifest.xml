@@ -24,13 +24,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CategoryActivity" />
         </activity>
+
         <activity android:name=".CategoryActivity">
             <meta-data
                 android:name="com.google.android.actions"
                 android:resource="@menu/category_menu" />
-
-
-
         </activity>
 
 

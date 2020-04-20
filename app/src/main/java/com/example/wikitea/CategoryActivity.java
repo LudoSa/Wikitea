@@ -1,5 +1,6 @@
 package com.example.wikitea;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import androidx.annotation.NonNull;
@@ -45,7 +49,6 @@ public class CategoryActivity extends AppCompatActivity {
     private List<Category> categories;
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,6 @@ public class CategoryActivity extends AppCompatActivity {
         //toolbar
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         //Button to add a new category
         FloatingActionButton buttonAddCategory = findViewById(R.id.button_add_category);
@@ -101,11 +103,7 @@ public class CategoryActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-        //Swipe delete item
+        //Swipe right to left to delete a category
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
 
             @Override
@@ -261,6 +259,10 @@ public class CategoryActivity extends AppCompatActivity {
                     }
                 });
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.action_logout:
+                startActivity(new Intent(CategoryActivity.this,LoginActivity.class));
                 return true;
 
             default:
