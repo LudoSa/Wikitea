@@ -1,5 +1,6 @@
 package com.example.wikitea;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -8,17 +9,24 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.wikitea.Tables.Admin.AdminRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailView;
     private EditText passwordView;
 
-    private AdminRepository repository;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        fAuth = FirebaseAuth.getInstance();
 
 
         //DARK/LIGHT THEME
@@ -48,21 +56,24 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordView.getText().toString();
 
             //Connection
-            repository.signIn(email, password, task -> {
 
-                if (task.isSuccessful()){
-                    Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
-                    startActivity(intent);
-                    emailView.setText("");
-                    passwordView.setText("");
-                } else {
-                    emailView.setError(getString(R.string.error_invalid_email));
-                    emailView.requestFocus();
-                    passwordView.setText("");
+            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                        startActivity(intent);
+                        emailView.setText("");
+                        passwordView.setText("");
+                    } else {
+                        emailView.setError(getString(R.string.error_invalid_email));
+                        emailView.requestFocus();
+                        passwordView.setText("");
+                    }
                 }
-
-
             });
+
+
 
 
         }

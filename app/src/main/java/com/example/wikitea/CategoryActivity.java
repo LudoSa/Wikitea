@@ -249,7 +249,17 @@ public class CategoryActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_delete_all_categories:
-             //   categoryViewModel.deleteAllCategories();
+                viewModelList.deleteAllCategories(new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "deleteAllCategories: success");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "deleteAllCategories: failure");
+                    }
+                });
                 Toast.makeText(this, "All categories deleted", Toast.LENGTH_LONG).show();
                 return true;
 

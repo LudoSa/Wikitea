@@ -46,7 +46,7 @@ public class AddEditCategoryActivity extends AppCompatActivity {
 
         if (intent.hasExtra(EXTRA_IDCATEGORY)){
             setTitle("Edit Category");
-            editTextName.setText(intent.getStringExtra(EXTRA_IDCATEGORY));
+            editTextName.setText(intent.getStringExtra(EXTRA_NAME));
             editTextVirtues.setText(intent.getStringExtra(EXTRA_VIRTUES));
         }else{
             setTitle("Add Category");

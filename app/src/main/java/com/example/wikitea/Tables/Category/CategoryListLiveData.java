@@ -59,6 +59,7 @@ public class CategoryListLiveData extends LiveData<List<Category>> {
             for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                 Category entity = childSnapshot.getValue(Category.class);
                 entity.setIdCategory(childSnapshot.getKey());
+                //entity.setName(name);
                 categories.add(entity);
             }
             return categories;
