@@ -16,14 +16,14 @@ public class CategoryListLiveData extends LiveData<List<Category>> {
     private static final String TAG = "CategoryListLiveData";
 
     private final DatabaseReference reference;
-    public String name ="";
+    public String id;
     private final MyValueEventListener listener = new MyValueEventListener();
 
 
-    public CategoryListLiveData(DatabaseReference reference, String name) {
+    public CategoryListLiveData(DatabaseReference reference, String id) {
 
         this.reference = reference;
-        this.name = name ;
+        this.id = id ;
     }
 
     public CategoryListLiveData(DatabaseReference reference)
@@ -59,7 +59,6 @@ public class CategoryListLiveData extends LiveData<List<Category>> {
             for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                 Category entity = childSnapshot.getValue(Category.class);
                 entity.setIdCategory(childSnapshot.getKey());
-                entity.setName(name);
                 categories.add(entity);
             }
             return categories;
