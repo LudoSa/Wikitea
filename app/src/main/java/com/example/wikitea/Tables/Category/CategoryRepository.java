@@ -55,6 +55,19 @@ public class CategoryRepository
     }
 
 
+    public void deleteAllCategories(OnAsyncEventListener callback)
+    {
+        FirebaseDatabase.getInstance()
+                .getReference("categories")
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
+    }
+
 
     public void insert(final Category category, final OnAsyncEventListener callback) {
         String key =  FirebaseDatabase.getInstance()
@@ -103,9 +116,4 @@ public class CategoryRepository
                 });
     }
 
-    public void deleteAllCategories(){
-
-        //new DeleteAllCategoryAsyncTask(categoryDao).execute();
-
-    }
 }
