@@ -60,13 +60,14 @@ public class TeaRepository {
 
 
     public void insert(final Tea tea, final OnAsyncEventListener callback) {
-
+        String key =  FirebaseDatabase.getInstance()
+                .getReference("teas").push().getKey();
 
         FirebaseDatabase.getInstance()
                 .getReference("categories")
                 .child(tea.getIdCategoryTea())
                 .child("teas")
-                .child(tea.getTitle())
+                .child(key)
                 .setValue(tea, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());
