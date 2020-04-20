@@ -97,7 +97,7 @@ public class TeaRepository {
                 .getReference("categories")
                 .child(tea.getIdCategoryTea())
                 .child("teas")
-                .child(tea.getTitle())
+                .child(tea.getIdTea())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());

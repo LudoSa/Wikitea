@@ -96,8 +96,8 @@ public class AddEditTeaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_ORIGIN,origin);
         data.putExtra(EXTRA_IDCATEGORYTEA, categoryId);
 
-        int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        if(id != -1)
+        String id = getIntent().getStringExtra(EXTRA_ID);
+        if(id != null)
         {
             data.putExtra(EXTRA_ID,id);
         }

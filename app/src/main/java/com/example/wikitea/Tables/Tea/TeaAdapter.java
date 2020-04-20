@@ -35,7 +35,6 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
         Tea currentTea = teas.get(position);
         holder.textViewTitle.setText(currentTea.getTitle());
         holder.textViewDescription.setText(currentTea.getDescription());
-        holder.textViewId.setText(String.valueOf(currentTea.getIdTea()));
 
 
     }
@@ -66,13 +65,11 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
 
         private TextView textViewTitle;
         private TextView textViewDescription;
-        private TextView textViewId;
 
         public TeaHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewId = itemView.findViewById(R.id.text_view_id);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
 

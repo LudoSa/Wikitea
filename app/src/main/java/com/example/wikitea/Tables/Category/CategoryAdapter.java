@@ -33,7 +33,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category currentCategory = categories.get(position);
         holder.textViewName.setText(currentCategory.getName());
         holder.textViewVirtues.setText(currentCategory.getVirtues());
-        holder.textViewId.setText(String.valueOf(currentCategory.getIdCategory()));
+        //holder.textViewId.setText(String.valueOf(currentCategory.getIdCategory()));
     }
 
     @Override
@@ -64,9 +64,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewName = itemView.findViewById(R.id.text_view_name);
+            textViewName = itemView.findViewById(R.id.text_view_categoryName);
             textViewVirtues = itemView.findViewById(R.id.text_view_virtues);
-            textViewId = itemView.findViewById(R.id.text_view_id);
+            //textViewId = itemView.findViewById(R.id.text_view_id);
 
             //Modify category by loooong clicking
             itemView.setOnLongClickListener(new OnLongClickListener() {
